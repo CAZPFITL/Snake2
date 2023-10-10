@@ -5,9 +5,11 @@ class SnakeObject {
     id = 0
     body = [
         {x: 0, y: 0},
-        {x: 0, y: 0}
+        {x: -1, y: 0},
+        {x: -2, y: 0},
+        {x: -3, y: 0}
     ]
-    length = 10
+    length = 40
     friction= 0.02
     acceleration = 0.05
     maxSpeed = 0.8
@@ -29,14 +31,14 @@ class SnakeObject {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    checkCollisions() {
+    checkBoundCollision(){
+        const head = this.body[0]
         const { x, y, width, height } = this.app.level.bounds;
-        const headX = this.body[0].x;
-        const headY = this.body[0].y;
+        const headX = head.x;
+        const headY = head.y;
 
         let collisionDetected = false;
 
-        // Bounds
         if (headX < x) {
             this.body[0].x = x;
             collisionDetected = true;
@@ -73,6 +75,16 @@ class SnakeObject {
             }
         } else {
             this.speed > this.minSpeed && (this.speed -= this.controls.reverse === 1 ? this.acceleration : this.friction)
+        }
+
+        this.checkBoundCollision()
+
+        for (let i = 2; i < this.body.length - 1; i++) {
+            const line1 = [this.body[0], this.body[1]]
+            const line2 = [this.body[i], this.body[i+1]]
+            if (this.app.tools.polysIntersect(line1, line2)) {
+                this.alive = false
+            }
         }
     }
 
@@ -111,7 +123,6 @@ class SnakeObject {
 
     update = () => {
         if (this.alive) {
-            this.checkCollisions()
             this.move()
             this.updatePosition()
         }

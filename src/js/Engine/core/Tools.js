@@ -1,40 +1,40 @@
 export default class Tools {
-    static lerp = (a, b, t) => a + (b - a) * t;
+    static lerp = (a, b, t) => a + (b - a) * t
 
     static random(min, max, floor = false) {
-        const r = Math.random() * (max - min) + min;
-        return floor ? Math.floor(r) : r;
+        const r = Math.random() * (max - min) + min
+        return floor ? Math.floor(r) : r
     }
 
     static radToDeg(angle) {
-        return angle * (180 / Math.PI);
+        return angle * (180 / Math.PI)
     }
 
     static degToRad(angle) {
-        return angle * (Math.PI / 180);
+        return angle * (Math.PI / 180)
     }
 
     static xDec = (n, x = 2) =>
-        Math.round(n * Math.pow(10, x)) / Math.pow(10, x);
+        Math.round(n * Math.pow(10, x)) / Math.pow(10, x)
 
     static max(arr) {
         let maxByFor = arr[0];
         for (let index = 1; index < arr.length; index++) {
             if (arr[index] > maxByFor) {
-                maxByFor = arr[index];
+                maxByFor = arr[index]
             }
         }
-        return maxByFor;
+        return maxByFor
     }
 
     static getIntersection(A, B, C, D) {
-        const tTop = (D.x - C.x) * (A.y - C.y) - (D.y - C.y) * (A.x - C.x);
-        const uTop = (C.y - A.y) * (A.x - B.x) - (C.x - A.x) * (A.y - B.y);
-        const bottom = (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y);
+        const tTop = (D.x - C.x) * (A.y - C.y) - (D.y - C.y) * (A.x - C.x)
+        const uTop = (C.y - A.y) * (A.x - B.x) - (C.x - A.x) * (A.y - B.y)
+        const bottom = (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y)
         // in case something misfunction I changed this != to !==
         if (bottom !== 0) {
-            const t = tTop / bottom;
-            const u = uTop / bottom;
+            const t = tTop / bottom
+            const u = uTop / bottom
             if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
                 return {
                     x: Tools.lerp(A.x, B.x, t),
@@ -44,6 +44,23 @@ export default class Tools {
             }
         }
 
-        return null;
-    };
+        return null
+    }
+
+    static polysIntersect(poly1, poly2) {
+        for (let i = 0; i < poly1.length; i++) {
+            for (let j = 0; j < poly2.length; j++) {
+                const touch = this.getIntersection(
+                    poly1[i],
+                    poly1[(i + 1) % poly1.length],
+                    poly2[j],
+                    poly2[(j + 1) % poly2.length],
+                )
+                if (touch) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
