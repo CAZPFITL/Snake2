@@ -6,6 +6,12 @@ export default class Tools {
         return floor ? Math.floor(r) : r
     }
 
+    static calculateDistance(point1, point2) {
+        const dx = point1.x - point2.x;
+        const dy = point1.y - point2.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
     static radToDeg(angle) {
         return angle * (180 / Math.PI)
     }
@@ -31,7 +37,6 @@ export default class Tools {
         const tTop = (D.x - C.x) * (A.y - C.y) - (D.y - C.y) * (A.x - C.x)
         const uTop = (C.y - A.y) * (A.x - B.x) - (C.x - A.x) * (A.y - B.y)
         const bottom = (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y)
-        // in case something misfunction I changed this != to !==
         if (bottom !== 0) {
             const t = tTop / bottom
             const u = uTop / bottom
@@ -74,10 +79,8 @@ export default class Tools {
         const x4 = line2[1].x;
         const y4 = line2[1].y;
 
-        // Fórmula para calcular la intersección de dos segmentos de línea
         const det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
         if (det === 0) {
-            // Los segmentos son paralelos, no hay intersección
             return false;
         }
 
@@ -85,7 +88,6 @@ export default class Tools {
         const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / det;
 
         if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
-            // Los segmentos se intersectan
             return true;
         }
 

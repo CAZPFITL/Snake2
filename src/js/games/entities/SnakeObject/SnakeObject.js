@@ -7,13 +7,13 @@ class SnakeObject {
         {x: 0, y: 0},
         {x: 0, y: 0}
     ]
-    length = 40
+    length = 2
     friction= 0.01
     acceleration = 0.02
     maxSpeed = 0.7
     normalSpeed = 0.5
-    minSpeed = 0.4
-    turnSpeed = 0.1
+    minSpeed = 0.3
+    turnSpeed = 0.05
     speed = 0.5
     angle = 0
     alive = true
@@ -22,12 +22,6 @@ class SnakeObject {
         this.app = app
         this.id = id
         this.controls = new SnakeControls(app, this)
-    }
-
-    calculateDistance(point1, point2) {
-        const dx = point1.x - point2.x;
-        const dy = point1.y - point2.y;
-        return Math.sqrt(dx * dx + dy * dy);
     }
 
     checkBoundCollision(){
@@ -54,8 +48,8 @@ class SnakeObject {
             const line1 = [
                 { x: this.body[0].x, y: this.body[0].y },
                 {
-                    x: this.body[0].x + Math.cos(this.angle) * this.calculateDistance(this.body[0], this.body[1]),
-                    y: this.body[0].y + Math.sin(this.angle) * this.calculateDistance(this.body[0], this.body[1])
+                    x: this.body[0].x + Math.cos(this.angle) * this.app.tools.calculateDistance(this.body[0], this.body[1]),
+                    y: this.body[0].y + Math.sin(this.angle) * this.app.tools.calculateDistance(this.body[0], this.body[1])
                 }
             ];
             const line2 = [this.body[i], this.body[i+1]];
@@ -92,7 +86,7 @@ class SnakeObject {
         const calcX = this.body[0].x - this.app.level.activeFood.x
         const calcY = this.body[0].y - this.app.level.activeFood.y
 
-        if (calcX < 2 && calcX > -2 && calcY < 2 && calcY > -2) {
+        if (this.app.tools.calculateDistance(this.body[0], this.app.level.activeFood) < 2) {
             this.length++
             this.app.level.newFood()
         }
@@ -107,7 +101,7 @@ class SnakeObject {
             const newHeadY = this.body[0].y + velocityY;
             if (this.body.length <= this.length) {
 
-                if (this.calculateDistance(this.body[0], this.body[1]) > this.DISTANCE_THRESHOLD) {
+                if (this.app.tools.calculateDistance(this.body[0], this.body[1]) > this.DISTANCE_THRESHOLD) {
                     this.body.unshift({ x: newHeadX, y: newHeadY });
                 } else {
                     this.body[0] = { x: newHeadX, y: newHeadY }
@@ -134,7 +128,7 @@ class SnakeObject {
     update = () => {
         if (this.alive) {
             this.checkBoundCollision()
-            this.checkSelfCollision()
+            // this.checkSelfCollision()
             this.move()
             this.updatePosition()
         }

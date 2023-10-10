@@ -4,10 +4,10 @@ import SnakeObject from './SnakeObject/SnakeObject.js'
 class Level {
     activeFood
     bounds = {
-        x: -250,
-        y: -250,
-        width: 500,
-        height: 500
+        x: -100,
+        y: -100,
+        width: 200,
+        height: 200
     }
     border = 4
 
