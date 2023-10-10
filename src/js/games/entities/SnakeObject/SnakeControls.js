@@ -13,7 +13,7 @@ class SnakeControls {
 
     onKeyUp = (event) => {
         event.stopPropagation()
-        event.preventDefault()
+        // event.preventDefault()
         switch (event.key) {
             case 'ArrowUp':
                 this.forward = 0
@@ -32,7 +32,7 @@ class SnakeControls {
 
     onKeyDown = (event) => {
         event.stopPropagation()
-        event.preventDefault()
+        // event.preventDefault()
         switch (event.key) {
             case 'ArrowUp':
                 this.forward = 1

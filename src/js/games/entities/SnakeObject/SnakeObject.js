@@ -15,6 +15,7 @@ class SnakeObject {
     turnSpeed = 0.06
     speed = 0.5
     angle = 0
+    alive = true
 
     constructor({ app, id = 0, ...props }) {
         this.app = app
@@ -29,10 +30,34 @@ class SnakeObject {
     }
 
     checkCollisions() {
+        const { x, y, width, height } = this.app.level.bounds;
+        const headX = this.body[0].x;
+        const headY = this.body[0].y;
 
+        let collisionDetected = false;
+
+        // Bounds
+        if (headX < x) {
+            this.body[0].x = x;
+            collisionDetected = true;
+        } else if (headX > x + width) {
+            this.body[0].x = x + width;
+            collisionDetected = true;
+        }
+
+        if (headY < y) {
+            this.body[0].y = y;
+            collisionDetected = true;
+        } else if (headY > y + height) {
+            this.body[0].y = y + height;
+            collisionDetected = true;
+        }
+
+        this.alive = !collisionDetected
     }
 
     move() {
+        // TURN
         if (this.controls.left === 1) {
             this.angle -= this.turnSpeed;
         } else if (this.controls.right === 1) {
@@ -41,6 +66,7 @@ class SnakeObject {
 
         this.angle %= 2 * Math.PI;
 
+        // SPEED
         if (this.controls.forward === 1) {
             if (this.controls.reverse === 0 && this.speed <= this.maxSpeed) {
                 this.speed += this.acceleration
@@ -48,7 +74,9 @@ class SnakeObject {
         } else {
             this.speed > this.minSpeed && (this.speed -= this.controls.reverse === 1 ? this.acceleration : this.friction)
         }
+    }
 
+    updatePosition() {
         if (this.speed > 0) {
             const velocityX = this.speed * Math.cos(this.angle);
             const velocityY = this.speed * Math.sin(this.angle);
@@ -82,7 +110,11 @@ class SnakeObject {
     }
 
     update = () => {
-        this.move()
+        if (this.alive) {
+            this.checkCollisions()
+            this.move()
+            this.updatePosition()
+        }
         this.draw()
     }
 }

@@ -57,37 +57,22 @@ export default class Screen {
             .pushListener('wheel', (event) => this.app.gui.camera.controls(event))
 
         this.app.gui.camera
-            .setProp('maxZoom', 2000)
-            .setProp('minZoom', 100)
-            .setProp('zoom', 1000)
+            .setProp('maxZoom', 600)
+            .setProp('minZoom', 200)
+            .setProp('zoom', 200)
             .setProp('lookAt', [0, 0])
     }
 
     update(){
         const ctx = this.gui.ctx
 
-        const playTabs = {
-            playground: {
-                type: 'square',
-                props: {
-                    ctx,
-                    x: -250,
-                    y: -250,
-                    color: '#4d878f',
-                    stroke: '#000000',
-                    widthStroke: 1,
-                    width: 500,
-                    height: 500,
-                    center: true
-                }
-            }
-        }
-
         this.gui.decorations = {
             LOAD_GAME: {
                 stateBg: '#000000'
             },
-            PLAY: { ...playTabs }
+            PLAY: {
+                stateBg: '#000000'
+            }
         }
     }
 }

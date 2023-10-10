@@ -1,5 +1,5 @@
-import SnakeObject from "./../entities/SnakeObject/SnakeObject.js"
-import Screen from "./Screen.js"
+import Screen from './Screen.js'
+import Level from '../entities/Level.js'
 
 export default class Snake2 {
     app
@@ -12,9 +12,16 @@ export default class Snake2 {
 
     setPlayState() {
         this.app.setState('PLAY')
-        this.app.player = new SnakeObject({app: this.app, id: 1})
-        this.app.looper.push(this.app.player)
+        this.app.level = new Level({ app: this.app })
+        this.app.looper.push(this.app.level)
         this.app.listeners.init()
+    }
+
+    follow() {
+        this.app.gui.camera.moveTo([
+            this.app.level.player.body[0].x,
+            this.app.level.player.body[0].y
+        ])
     }
 
     update = () => {
