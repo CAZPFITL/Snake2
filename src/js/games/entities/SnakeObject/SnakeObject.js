@@ -37,28 +37,40 @@ class SnakeObject {
         const headX = head.x;
         const headY = head.y;
 
-        let collisionDetected = false;
-
         if (headX < x) {
-            this.body[0].x = x;
-            collisionDetected = true;
+            this.alive = false
         } else if (headX > x + width) {
-            this.body[0].x = x + width;
-            collisionDetected = true;
+            this.alive = false
         }
 
         if (headY < y) {
-            this.body[0].y = y;
-            collisionDetected = true;
+            this.alive = false
         } else if (headY > y + height) {
-            this.body[0].y = y + height;
-            collisionDetected = true;
+            this.alive = false
         }
-
-        this.alive = !collisionDetected
     }
 
+    checkSelfCollision() {
+        for (let i = 2; i < this.body.length - 1; i++) {
+            const line1 = [
+                { x: this.body[0].x, y: this.body[0].y },
+                {
+                    x: this.body[0].x + Math.cos(this.angle) * this.calculateDistance(this.body[0], this.body[1]),
+                    y: this.body[0].y + Math.sin(this.angle) * this.calculateDistance(this.body[0], this.body[1])
+                }
+            ];
+            const line2 = [this.body[i], this.body[i+1]];
+            if (this.app.tools.segmentsIntersection(line1, line2)) {
+                this.alive = false;
+            }
+        }
+    }
+
+
     move() {
+        this.checkBoundCollision()
+        this.checkSelfCollision()
+
         // TURN
         if (this.controls.left === 1) {
             this.angle -= this.turnSpeed;
@@ -77,15 +89,7 @@ class SnakeObject {
             this.speed > this.minSpeed && (this.speed -= this.controls.reverse === 1 ? this.acceleration : this.friction)
         }
 
-        this.checkBoundCollision()
-
-        for (let i = 2; i < this.body.length - 1; i++) {
-            const line1 = [this.body[0], this.body[1]]
-            const line2 = [this.body[i], this.body[i+1]]
-            if (this.app.tools.polysIntersect(line1, line2)) {
-                this.alive = false
-            }
-        }
+        this.updatePosition()
     }
 
     updatePosition() {
@@ -124,7 +128,6 @@ class SnakeObject {
     update = () => {
         if (this.alive) {
             this.move()
-            this.updatePosition()
         }
         this.draw()
     }

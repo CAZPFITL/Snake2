@@ -63,4 +63,32 @@ export default class Tools {
         }
         return false
     }
+
+    static segmentsIntersection(line1, line2) {
+        const x1 = line1[0].x;
+        const y1 = line1[0].y;
+        const x2 = line1[1].x;
+        const y2 = line1[1].y;
+        const x3 = line2[0].x;
+        const y3 = line2[0].y;
+        const x4 = line2[1].x;
+        const y4 = line2[1].y;
+
+        // Fórmula para calcular la intersección de dos segmentos de línea
+        const det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        if (det === 0) {
+            // Los segmentos son paralelos, no hay intersección
+            return false;
+        }
+
+        const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / det;
+        const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / det;
+
+        if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+            // Los segmentos se intersectan
+            return true;
+        }
+
+        return false;
+    }
 }
