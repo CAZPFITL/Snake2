@@ -26,7 +26,6 @@ export default class Snake2 {
 
     update = () => {
         if (this.app.state === 'LOAD_GAME') this.setPlayState()
-
         this.screen.update()
     }
 }

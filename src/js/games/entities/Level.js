@@ -9,6 +9,7 @@ class Level {
         width: 500,
         height: 500
     }
+    border = 4
 
     constructor({ app }) {
         this.app = app
@@ -16,19 +17,23 @@ class Level {
     }
 
     init(app) {
-        this.activeFood = new Food({ app })
+        this.activeFood = new Food({ app, bounds: this.bounds })
         this.player = new SnakeObject({ app, id: 1 })
     }
 
     draw(ctx = this.app.gui.ctx) {
         this.app.gui.get.square({
             ctx,
-            color: '#4d878f',
-            stroke: '#000000',
-            widthStroke: 1,
+            color: '#eece9d',
+            stroke: '#692700',
+            widthStroke: this.border + 2.5,
             center: true,
             ...this.bounds
         })
+    }
+
+    newFood() {
+        this.activeFood = new Food({ app: this.app, bounds: this.bounds })
     }
 
     update = () => {
