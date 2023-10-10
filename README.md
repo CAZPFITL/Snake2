@@ -1,3 +1,4 @@
-# Icecream Tycoon
+# Snake 2
 
-![image](https://github.com/CAZPFITL/Ice-Cream-Tycoon/assets/15793619/7b309a52-6ba2-4512-9c30-ef4800ccd7bf)
+![image](https://github.com/CAZPFITL/Snake2/assets/15793619/639d08d5-8feb-4a11-94de-98e7faa2cda0)
+
