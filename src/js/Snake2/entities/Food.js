@@ -2,7 +2,8 @@ import Tools from '../../Engine/core/Tools.js'
 
 class Food {
     radius = Tools.random(1, 5, true)
-    color = '#FF00FF'
+    isSpecial = Tools.random(0, 1000, true) < 50
+    color = this.isSpecial ? '#00FFFF' : '#FF00FF'
     constructor({ app, level }) {
         const { bounds: { width, height }, border } = level
         this.app = app

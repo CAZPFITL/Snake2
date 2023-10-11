@@ -1,21 +1,17 @@
 import SnakeControls from "./SnakeControls.js";
 
 class SnakeObject {
-    DISTANCE_THRESHOLD = 4
     id = 0
     head = {x: 0, y: 0}
-    body = [
-        {x: 0, y: 0},
-        {x: 0, y: 0}
-    ]
-    width = 2
-    length = 200
+    body = [{x: 0, y: 0}]
+    width = 1
+    length = 2
     friction= 0.01
     acceleration = 0.02
     maxSpeed = 0.7
     normalSpeed = 0.5
-    minSpeed = 0.3
-    turnSpeed = 0.08
+    minSpeed = 0.4
+    turnSpeed = 0.06
     speed = 0.5
     angle = 0
     alive = true
@@ -40,19 +36,29 @@ class SnakeObject {
     }
 
     checkSelfCollision() {
+        /**
+         * The 'precisionReliabilityTradeOff' variable represents the balance between precision and reliability.
+         * A higher value favors reliability at the cost of precision, while a lower value prioritizes precision
+         * but may decrease reliability. Adjust this value according to your specific requirements.
+         * It is recommended not to use values lower than 4.
+         */
+        const precisionReliabilityTradeOff = 10
+
         const line1 = [
             { x: this.head.x, y: this.head.y },
             {
-                x: this.body[0].x,
-                y: this.body[0].y
+                x: this.body[this.body?.[precisionReliabilityTradeOff] ? precisionReliabilityTradeOff : this.body.length - 1].x,
+                y: this.body[this.body?.[precisionReliabilityTradeOff] ? precisionReliabilityTradeOff : this.body.length - 1].y
             }
         ]
 
-        for (let i = 1; i < this.body.length - 1; i++) {
-            const line2 = [ this.body[i], this.body[i + 1] ]
-            if (this.app.tools.segmentsIntersection(line1, line2)) {
-                console.log({line1, line2})
-                this.alive = false
+        for (let i = precisionReliabilityTradeOff + 1; i < this.body.length - 1; i++) {
+            if (this.body[i + precisionReliabilityTradeOff]) {
+                const line2 = [ this.body[i], this.body[i + precisionReliabilityTradeOff] ]
+                if (this.app.tools.segmentsIntersection(line1, line2)) {
+                    console.log({line1, line2})
+                    this.alive = false
+                }
             }
         }
     }
@@ -85,7 +91,9 @@ class SnakeObject {
         const minimumDistanceToEat = this.app.level.activeFood.radius + ( this.width / 2 )
 
         if (distanceToFood < minimumDistanceToEat) {
-            this.length += (this.app.level.activeFood.radius * this.app.level.multiplier)
+            const foodMultiplier = this.app.level.activeFood.isSpecial ? 20 : 1
+            const foodValue = this.app.level.activeFood.radius * foodMultiplier
+            this.length += (foodValue * this.app.level.multiplier)
             this.app.level.newFood()
         }
     }
@@ -99,7 +107,7 @@ class SnakeObject {
 
             this.head = { x: newHeadX, y: newHeadY }
 
-            if (this.app.tools.calculateDistance(this.head, this.body[0]) > this.DISTANCE_THRESHOLD) {
+            if (this.app.tools.calculateDistance(this.head, this.body[0]) > this.width) {
                 this.body = [this.head, ...this.body]
 
                 if (this.body.length > this.length) {
@@ -114,20 +122,20 @@ class SnakeObject {
             ctx,
             collection: [this.head, ...this.body],
             color: 'rgb(255, 0, 255)',
-            width: 2,
+            width: this.width,
             lineCap: 'round',
             scale: 1
-        })
+        }, true)
     }
 
     update = () => {
         if (this.alive) {
+            this.checkBoundCollision()
+            this.checkSelfCollision()
             this.updateSpeed()
             this.updatePosition()
             this.updateAngle()
             this.updateBodyLength()
-            this.checkBoundCollision()
-            this.checkSelfCollision()
             this.app.game.follow()
         }
         this.draw()
