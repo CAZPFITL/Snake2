@@ -9,6 +9,7 @@ class Level {
         width: 200,
         height: 200
     }
+    multiplier = 1
     border = 4
 
     constructor({ app }) {
@@ -40,7 +41,6 @@ class Level {
         this.draw()
         this.activeFood.update()
         this.player.update()
-        this.app.level.player.alive && this.app.game.follow()
     }
 }
 
