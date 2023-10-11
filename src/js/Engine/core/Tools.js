@@ -70,6 +70,9 @@ export default class Tools {
     }
 
     static segmentsIntersection(line1, line2) {
+        // Tolerance for numerical precision issues
+        const epsilon = 1e-10;
+
         const x1 = line1[0].x;
         const y1 = line1[0].y;
         const x2 = line1[1].x;
@@ -80,13 +83,16 @@ export default class Tools {
         const y4 = line2[1].y;
 
         const det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-        if (det === 0) {
+
+        // Parallel or collinear segments
+        if (Math.abs(det) < epsilon) {
             return false;
         }
 
         const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / det;
         const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / det;
 
+        // Segments intersect
         if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
             return true;
         }

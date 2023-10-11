@@ -17,7 +17,7 @@ class Level {
     }
 
     init(app) {
-        this.activeFood = new Food({ app, bounds: this.bounds })
+        this.activeFood = new Food({ app, level: this })
         this.player = new SnakeObject({ app, id: 1 })
     }
 
@@ -26,14 +26,14 @@ class Level {
             ctx,
             color: '#eece9d',
             stroke: '#692700',
-            widthStroke: this.border + 2.5,
+            widthStroke: this.border,
             center: true,
             ...this.bounds
         })
     }
 
     newFood() {
-        this.activeFood = new Food({ app: this.app, bounds: this.bounds })
+        this.activeFood = new Food({ app: this.app, level: this })
     }
 
     update = () => {
