@@ -84,7 +84,7 @@ export default class Tools {
 
         const det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 
-        // Segmentos paralelos o colineales
+        // Parallel or collinear segments
         if (Math.abs(det) < epsilon) {
             return false;
         }
@@ -92,7 +92,7 @@ export default class Tools {
         const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / det;
         const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / det;
 
-        // Segmentos se intersectan
+        // Segments intersect
         if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
             return true;
         }

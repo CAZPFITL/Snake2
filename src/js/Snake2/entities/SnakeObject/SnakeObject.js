@@ -8,10 +8,10 @@ class SnakeObject {
     length = 2
     friction= 0.01
     acceleration = 0.02
-    maxSpeed = 0.7
+    maxSpeed = 0.6
     normalSpeed = 0.5
-    minSpeed = 0.4
-    turnSpeed = 0.06
+    minSpeed = 0.2
+    turnSpeed = 0.07
     speed = 0.5
     angle = 0
     alive = true
