@@ -1,7 +1,7 @@
 import SnakeControls from "./SnakeControls.js";
 
 class SnakeObject {
-    DISTANCE_THRESHOLD = 10
+    DISTANCE_THRESHOLD = 2
     id = 0
     head = {x: 0, y: 0}
     body = [
@@ -9,13 +9,13 @@ class SnakeObject {
         {x: 0, y: 0}
     ]
     width = 2
-    length = 5
+    length = 2
     friction= 0.01
     acceleration = 0.02
     maxSpeed = 0.7
-    normalSpeed = 0.05
-    minSpeed = 0.03
-    turnSpeed = 0.05
+    normalSpeed = 0.5
+    minSpeed = 0.3
+    turnSpeed = 0.08
     speed = 0.5
     angle = 0
     alive = true
@@ -85,8 +85,8 @@ class SnakeObject {
         const minimumDistanceToEat = this.app.level.activeFood.radius + ( this.width / 2 )
 
         if (distanceToFood < minimumDistanceToEat) {
-            this.length++;
-            this.app.level.newFood();
+            this.length += (this.app.level.activeFood.radius * 2)
+            this.app.level.newFood()
         }
     }
 

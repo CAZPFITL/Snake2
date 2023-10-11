@@ -40,7 +40,7 @@ class Level {
         this.draw()
         this.activeFood.update()
         this.player.update()
-        this.app.game.follow()
+        this.app.level.player.alive && this.app.game.follow()
     }
 }
 

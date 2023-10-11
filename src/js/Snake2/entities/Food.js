@@ -1,5 +1,7 @@
+import Tools from '../../Engine/core/Tools.js'
+
 class Food {
-    radius = 1
+    radius = Tools.random(1, 5, true)
     color = '#FF00FF'
     constructor({ app, level }) {
         const { bounds: { width, height }, border } = level
