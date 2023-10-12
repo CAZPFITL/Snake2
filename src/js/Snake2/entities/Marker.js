@@ -18,7 +18,7 @@ class Marker {
     }
 
     updateDistance() {
-        this.distance = this.app.tools.calculateDistance(this.app.level.player.head, this.app.level.activeFood) * 1.5
+        this.distance = this.app.tools.calculateDistance(this.app.level.player.head, this.app.level.activeFood)
         this.display = this.distance > 50
     }
     updatePosition() {
