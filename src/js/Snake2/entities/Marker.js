@@ -2,8 +2,7 @@ class Marker {
     x = window.innerWidth / 2
     y = window.innerHeight / 2
     angle = 0
-    width = 20
-    height = 10
+    size = 20
     polygons = []
     display = false
     constructor({app}) {
@@ -19,7 +18,7 @@ class Marker {
 
     updateDistance() {
         this.distance = this.app.tools.calculateDistance(this.app.level.player.head, this.app.level.activeFood)
-        this.display = this.distance > 50
+        this.display = this.distance > 30
     }
     updatePosition() {
         this.x = window.innerWidth / 2 + this.distance * Math.cos(this.angle);
@@ -27,9 +26,12 @@ class Marker {
     }
 
     updateShape() {
+        const dist = this.distance / 100
+        const width = this.size * (dist < 2 ? dist : 2)
+        const height = (this.size * 2) * (dist < 2 ? dist : 2)
         const angle = (this.angle - Math.PI/2) % (2 * Math.PI);
 
-        const halfBase = this.width / 2;
+        const halfBase = width / 2;
 
         const vertex1 = {
             x: this.x + halfBase * Math.cos(angle),
@@ -42,8 +44,8 @@ class Marker {
         };
 
         const vertex3 = {
-            x: this.x + this.height * Math.cos(angle + Math.PI / 2),
-            y: this.y + this.height * Math.sin(angle + Math.PI / 2)
+            x: this.x + height * Math.cos(angle + Math.PI / 2),
+            y: this.y + height * Math.sin(angle + Math.PI / 2)
         };
 
         this.polygons = [vertex1, vertex2, vertex3];
@@ -53,7 +55,7 @@ class Marker {
         if (!this.display || !this.app.level.player.alive) {
             return;
         }
-        this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, 'red')
+        this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, this.app.level.activeFood.color)
     }
 
     update = () => {
