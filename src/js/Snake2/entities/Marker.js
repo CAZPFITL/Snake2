@@ -26,21 +26,20 @@ class Marker {
     }
 
     updateShape() {
-        const dist = this.distance / 100
-        const width = this.size * (dist < 2 ? dist : 2)
-        const height = (this.size * 2) * (dist < 2 ? dist : 2)
+        let dist = this.distance / 100
+        dist = (dist < 2 ? dist : 2)
+        const width = this.size / 2 * dist
+        const height = (this.size * 2) * dist
         const angle = (this.angle - Math.PI/2) % (2 * Math.PI);
 
-        const halfBase = width / 2;
-
         const vertex1 = {
-            x: this.x + halfBase * Math.cos(angle),
-            y: this.y + halfBase * Math.sin(angle)
+            x: this.x + width * Math.cos(angle),
+            y: this.y + width * Math.sin(angle)
         };
 
         const vertex2 = {
-            x: this.x + halfBase * Math.cos(angle + Math.PI),
-            y: this.y + halfBase * Math.sin(angle + Math.PI)
+            x: this.x + width * Math.cos(angle + Math.PI),
+            y: this.y + width * Math.sin(angle + Math.PI)
         };
 
         const vertex3 = {
@@ -55,7 +54,7 @@ class Marker {
         if (!this.display || !this.app.level.player.alive) {
             return;
         }
-        this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, this.app.level.activeFood.color)
+        this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, `${this.app.level.activeFood.color}50`)
     }
 
     update = () => {
