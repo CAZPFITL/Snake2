@@ -15,6 +15,7 @@ export default class Gui extends ScreenObjects {
         super();
         this.app = app;
         this.ctx = Gui.createCanvas('gameCanvas');
+        this.windowCtx = Gui.createCanvas('windowCanvas');
         this.camera = new Camera(app);
         app.gui = this;
     }

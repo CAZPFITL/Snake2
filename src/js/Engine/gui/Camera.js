@@ -97,12 +97,12 @@ export default class Camera {
         }
     }
 
-    begin = (ctx = this.app.gui.ctx) => {
+    begin = (ctx = this.app.gui.ctx, viewport = true) => {
         ctx.canvas.height = window.innerHeight
         ctx.canvas.width = window.innerWidth
-        this.#updateViewportData(ctx)
+        viewport && this.#updateViewportData(ctx)
         ctx.save()
-        this.#scaleAndTranslate(ctx)
+        viewport && this.#scaleAndTranslate(ctx)
     }
 
     end = (ctx = this.app.gui.ctx) => {
@@ -110,8 +110,10 @@ export default class Camera {
     }
 
     loop(handler) {
-        this.begin()
+        this.begin(this.app.gui.ctx)
+        this.begin(this.app.gui.windowCtx, false)
         handler()
-        this.end()
+        this.end(this.app.gui.ctx)
+        this.end(this.app.gui.windowCtx, false)
     }
 }

@@ -71,7 +71,20 @@ export default class Screen {
                 stateBg: '#000000'
             },
             PLAY: {
-                stateBg: '#000000'
+                stateBg: '#000000',
+                screenTitle: {
+                    type: 'text',
+                    props: {
+                        ctx: this.app.gui.windowCtx,
+                        font: '40px Mouse',
+                        text: this.app?.level?.player?.length,
+                        x: 30,
+                        y: window.innerHeight - 20,
+                        color: '#ffffff',
+                        width: 0,
+                        height: 0
+                    }
+                },
             }
         }
     }
