@@ -18,18 +18,12 @@ class Marker {
     }
 
     updateDistance() {
-        this.distance = this.app.tools.calculateDistance(this.app.level.player.head, this.app.level.activeFood) * 2
+        this.distance = this.app.tools.calculateDistance(this.app.level.player.head, this.app.level.activeFood) * 1.5
         this.display = this.distance > 50
     }
     updatePosition() {
-        // Calcular las coordenadas de la punta de la flecha
-        const arrowX = window.innerWidth / 2 + this.distance * Math.cos(this.angle);
-        const arrowY = window.innerHeight / 2 + this.distance * Math.sin(this.angle);
-
-        const target = { arrowX, arrowY }
-        // Asignar las coordenadas de la punta de la flecha a this.x y this.y
-        this.x = arrowX;
-        this.y = arrowY;
+        this.x = window.innerWidth / 2 + this.distance * Math.cos(this.angle);
+        this.y = window.innerHeight / 2 + this.distance * Math.sin(this.angle);
     }
 
     updateShape() {
