@@ -1,5 +1,5 @@
-import Screen from './Screen.js'
-import Level from '../entities/Level.js'
+import Screen from './src/Screen.js'
+import Level from './entities/Level.js'
 
 export default class Snake2 {
     app

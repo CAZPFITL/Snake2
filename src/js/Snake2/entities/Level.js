@@ -1,5 +1,5 @@
 import Food from './Food.js'
-import SnakeObject from './SnakeObject/SnakeObject.js'
+import Snake from './Snake.js'
 
 class Level {
     activeFood
@@ -19,7 +19,7 @@ class Level {
 
     init(app) {
         this.activeFood = new Food({ app, level: this })
-        this.player = new SnakeObject({ app, id: 1 })
+        this.player = new Snake({ app, id: 1 })
     }
 
     draw(ctx = this.app.gui.ctx) {

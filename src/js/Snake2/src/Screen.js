@@ -72,7 +72,7 @@ export default class Screen {
             },
             PLAY: {
                 stateBg: '#000000',
-                screenTitle: {
+                score: {
                     type: 'text',
                     props: {
                         ctx: this.app.gui.windowCtx,
@@ -84,7 +84,7 @@ export default class Screen {
                         width: 0,
                         height: 0
                     }
-                },
+                }
             }
         }
     }

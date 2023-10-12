@@ -1,17 +1,16 @@
-import SnakeControls from "./SnakeControls.js";
+import SnakeControls from "../src/Controls.js";
 
-class SnakeObject {
+class Snake {
     id = 0
     head = {x: 0, y: 0}
     body = [{x: 0, y: 0}]
     width = 1
     length = 2
-    friction= 0.01
     acceleration = 0.02
-    maxSpeed = 0.6
+    maxSpeed = 0.65
     normalSpeed = 0.5
-    minSpeed = 0.2
-    turnSpeed = 0.07
+    minSpeed = 0.35
+    turnSpeed = 0.1
     speed = 0.5
     angle = 0
     alive = true
@@ -42,7 +41,7 @@ class SnakeObject {
          * but may decrease reliability. Adjust this value according to your specific requirements.
          * It is recommended not to use values lower than 4.
          */
-        const precisionReliabilityTradeOff = 10
+        const precisionReliabilityTradeOff = 4
 
         const line1 = [
             { x: this.head.x, y: this.head.y },
@@ -82,7 +81,7 @@ class SnakeObject {
                 this.speed -= this.acceleration;
             }
         } else {
-            this.speed += this.speed > this.normalSpeed ? -this.friction : this.friction ?? 0;
+            this.speed += this.speed > this.normalSpeed ? -this.acceleration : this.acceleration ?? 0;
         }
     }
 
@@ -130,16 +129,16 @@ class SnakeObject {
 
     update = () => {
         if (this.alive) {
-            this.checkBoundCollision()
-            this.checkSelfCollision()
             this.updateSpeed()
             this.updatePosition()
             this.updateAngle()
             this.updateBodyLength()
+            this.checkBoundCollision()
+            this.checkSelfCollision()
             this.app.game.follow()
         }
         this.draw()
     }
 }
 
-export default SnakeObject
+export default Snake

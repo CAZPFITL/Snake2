@@ -5,18 +5,18 @@ export default class ScreenObjects extends ScreenMethods {
         super();
     }
 
-    static polygon(ctx, entity) {
+    static polygon(ctx, collection, fill = '#000') {
         ctx.save();
-        if (entity.polygons.length < 1) return;
+        if (collection.length < 1) return;
 
         ctx.beginPath();
-        ctx.moveTo(entity.polygons[0].x, entity.polygons[0].y);
+        ctx.moveTo(collection[0].x, collection[0].y);
 
-        for (let i = 1; i < entity.polygons.length; i++) {
-            ctx.lineTo(entity.polygons[i].x, entity.polygons[i].y);
+        for (let i = 1; i < collection.length; i++) {
+            ctx.lineTo(collection[i].x, collection[i].y);
         }
 
-        ctx.fillStyle = entity.color ?? '#000';
+        ctx.fillStyle = fill;
         ctx.fill();
         ctx.restore();
     }

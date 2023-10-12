@@ -1,4 +1,4 @@
-class SnakeControls {
+class Controls {
     forward = 0
     reverse = 0
     right = 0
@@ -50,4 +50,4 @@ class SnakeControls {
     }
 }
 
-export default SnakeControls
+export default Controls

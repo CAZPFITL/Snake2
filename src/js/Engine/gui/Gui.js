@@ -4,6 +4,7 @@ import Camera from './Camera.js';
 export default class Gui extends ScreenObjects {
     app;
     ctx;
+    windowCtx;
     camera;
     get = Gui;
     decorations = {};
