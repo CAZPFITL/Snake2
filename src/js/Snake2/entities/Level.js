@@ -1,5 +1,6 @@
 import Food from './Food.js'
 import Snake from './Snake.js'
+import Marker from "./Marker.js";
 
 class Level {
     activeFood
@@ -20,6 +21,7 @@ class Level {
     init(app) {
         this.activeFood = new Food({ app, level: this })
         this.player = new Snake({ app, id: 1 })
+        this.marker = new Marker({ app })
     }
 
     draw(ctx = this.app.gui.ctx) {
@@ -41,6 +43,7 @@ class Level {
         this.draw()
         this.activeFood.update()
         this.player.update()
+        this.marker.update()
     }
 }
 

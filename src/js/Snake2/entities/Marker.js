@@ -1,6 +1,6 @@
 class Marker {
-    x = 0
-    y = 0
+    x = window.innerWidth / 2
+    y = window.innerHeight / 2
     angle = 0
     width = 100
     height = 50
@@ -10,7 +10,7 @@ class Marker {
     }
 
     updateShape() {
-        const halfBase = this.baseLength / 2;
+        const halfBase = this.width / 2;
 
         const vertex1 = {
             x: this.x + halfBase * Math.cos(this.angle),
@@ -30,6 +30,15 @@ class Marker {
         this.polygons = [vertex1, vertex2, vertex3];
     }
 
+    draw() {
+        this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, 'red')
+    }
+
+    update = () => {
+        this.updateShape()
+        this.draw()
+        this.angle+= 0.01
+    }
 }
 
 export default Marker
