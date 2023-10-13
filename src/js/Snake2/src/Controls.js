@@ -91,12 +91,12 @@ class Controls {
 
         // Definir el rango deseado para el delta (entre 0 y 0.2)
         const minRange = 0;
-        const maxRange = 0.2;
+        const maxRange = 0.1;
 
         // Mapear deltaX y deltaY al rango deseado sin sensitivityThreshold
         this.right = mapValue(deltaX, -Infinity, Infinity, minRange, maxRange);
-        this.left = mapValue(deltaX, -Infinity, Infinity, minRange, maxRange);
-        this.reverse = mapValue(deltaY, -Infinity, Infinity, minRange, maxRange);
+        this.left = -mapValue(deltaX, -Infinity, Infinity, minRange, maxRange);
+        this.reverse = -mapValue(deltaY, -Infinity, Infinity, minRange, maxRange);
         this.forward = mapValue(deltaY, -Infinity, Infinity, minRange, maxRange);
     }
 
