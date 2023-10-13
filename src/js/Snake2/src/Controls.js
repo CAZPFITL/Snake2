@@ -67,8 +67,8 @@ class Controls {
     }
 
     update = () => {
-        this.forward = this.joystick.GetY() > 20 ? 1 : 0
-        this.reverse = this.joystick.GetY() < 0 ? 1 : 0
+        // this.forward = this.joystick.GetY() > 20 ? 1 : 0
+        // this.reverse = this.joystick.GetY() < 0 ? 1 : 0
         this.right = this.joystick.GetX() > 20 ? this.joystick.GetX() / 100 : 0
         this.left = this.joystick.GetX() < 20 ? -this.joystick.GetX() / 100 : 0
     }

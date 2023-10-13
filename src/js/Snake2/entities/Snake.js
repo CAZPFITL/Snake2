@@ -12,9 +12,9 @@ class Snake {
     width = 1
     length = 200
     acceleration = 0.02
-    maxSpeed = 0.8
-    normalSpeed = 0.4
-    minSpeed = 0.1
+    maxSpeed = 0.3
+    normalSpeed = 0.3
+    minSpeed = 0.3
     turnSpeed = 0.2
     speed = 0.5
     angle = 0
