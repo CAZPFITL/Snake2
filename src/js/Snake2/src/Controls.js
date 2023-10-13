@@ -77,10 +77,10 @@ class Controls {
         const deltaY = touch.clientY - this.touchStartY;
 
         if (deltaX > 0) {
-            this.right = deltaX * 0.005;
+            this.right = deltaX / window.innerWidth * 1.5;
         }
         if (deltaX < 0) {
-            this.left = -deltaX * 0.005;
+            this.left = -deltaX / window.innerHeight * 1.5;
         }
         if (deltaY < 0) {
             this.forward = 1;
