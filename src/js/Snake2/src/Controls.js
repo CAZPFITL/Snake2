@@ -5,13 +5,6 @@ class Controls {
     left = 0
     touchStartX = 0;
     touchStartY = 0;
-
-    /**
-     * Create a new Controls instance to manage movement controls.
-     *
-     * @param {App} app - The application instance.
-     * @param {Entity} entity - The entity for which controls are applied.
-     */
     constructor(app) {
         this.app = app
         const props = Object.getOwnPropertyNames(this);
