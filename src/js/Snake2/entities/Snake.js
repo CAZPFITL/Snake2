@@ -84,8 +84,12 @@ class Snake {
      * Update the snake's angle based on user controls for turning left and right.
      */
     updateAngle() {
-        if (this.controls.left === 1 || this.controls.right === 1) {
-            this.angle += (this.controls.left === 1 ? -1 : 1) * this.turnSpeed / 2;
+        if (this.controls.left > 0) {
+            this.angle -= this.controls.left * this.turnSpeed / 2;
+        }
+
+        if (this.controls.right > 0) {
+            this.angle += this.controls.right * this.turnSpeed / 2;
         }
 
         // Keep angle within a readable range
@@ -96,16 +100,12 @@ class Snake {
      * Update the snake's speed based on user controls for accelerating and reversing.
      */
     updateSpeed() {
-        if (this.controls.forward === 1) {
-            if (this.controls.reverse === 0 && this.speed <= this.maxSpeed) {
-                this.speed += this.acceleration;
-            }
-        } else if (this.controls.reverse === 1) {
-            if (this.speed >= this.minSpeed) {
-                this.speed -= this.acceleration;
-            }
-        } else {
-            this.speed += this.speed > this.normalSpeed ? -this.acceleration : this.acceleration ?? 0;
+        if (this.controls.forward > 0 && this.speed <= this.maxSpeed) {
+            this.speed += this.controls.forward < 1 ? this.controls.forward : this.acceleration;
+        } else if (this.controls.reverse > 0 && this.speed >= this.minSpeed) {
+            this.speed -= this.controls.reverse < 1 ? this.controls.reverse : this.acceleration;
+        } else if (this.speed !== this.normalSpeed) {
+            this.speed += (this.speed > this.normalSpeed) ? -this.acceleration : this.acceleration;
         }
     }
 

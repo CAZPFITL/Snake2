@@ -5,7 +5,7 @@ class Controls {
     left = 0
     touchStartX = 0;
     touchStartY = 0;
-    sensitivityThreshold = Math.min(window.innerHeight, window.innerWidth) / 3;
+    sensitivityThreshold = 100;
 
     /**
      * Create a new Controls instance to manage movement controls.
@@ -84,16 +84,16 @@ class Controls {
         const deltaY = touch.clientY - this.touchStartY;
 
         if (Math.abs(deltaX) > this.sensitivityThreshold) {
-            this.right = deltaX > 0 ? 1 : 0;
-            this.left = deltaX < 0 ? 1 : 0;
+            this.right = deltaX > 0 ? deltaX : 0;
+            this.left = deltaX < 0 ? deltaX : 0;
         } else {
             this.right = 0;
             this.left = 0;
         }
 
         if (Math.abs(deltaY) > this.sensitivityThreshold) {
-            this.reverse = deltaY > 0 ? 1 : 0;
-            this.forward = deltaY < 0 ? 1 : 0;
+            this.reverse = deltaY > 0 ? deltaY : 0;
+            this.forward = deltaY < 0 ? deltaY : 0;
         } else {
             this.reverse = 0;
             this.forward = 0;
