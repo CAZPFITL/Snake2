@@ -5,7 +5,7 @@ class Controls {
     left = 0
     touchStartX = 0;
     touchStartY = 0;
-    sensitivityThreshold = 20;
+    sensitivityThreshold = Math.min(window.innerHeight, window.innerWidth) / 3;
 
     /**
      * Create a new Controls instance to manage movement controls.
