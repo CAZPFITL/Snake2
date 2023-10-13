@@ -2,6 +2,20 @@ class EventsMethods {
     app
     gui
 
+    constructor({ listeners, gui }) {
+        gui.camera
+            .setProp('maxZoom', 600)
+            .setProp('minZoom', 200)
+            .setProp('zoom', 200)
+            .setProp('lookAt', [0, 0])
+
+        const props = Object.getOwnPropertyNames(this);
+        const eventTypes = props.filter(prop => typeof this[prop] === 'function');
+        eventTypes.forEach(eventType => {
+            listeners.pushListener(eventType, this[eventType]);
+        });
+    }
+
     /**
      * Handle the mouse wheel event to zoom or pan the camera.
      *
@@ -66,7 +80,7 @@ class EventsMethods {
         Object.keys(buttons).forEach(key => {
             if (key === this.app.gui.elementHovered) {
                 this.app.gui.buttonsStates[key] = 'click'
-                buttons[key].props.callbacks?.mousemove?.(event)
+                buttons[key].props.callbacks?.mousedown?.(event)
             }
         })
     }

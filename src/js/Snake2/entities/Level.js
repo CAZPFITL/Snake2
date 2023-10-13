@@ -46,8 +46,8 @@ class Level {
     draw(ctx = this.app.gui.ctx) {
         this.app.gui.get.square({
             ctx,
-            color: '#eece9d',
-            stroke: '#692700',
+            color: '#ffe9e9',
+            stroke: '#4f0069',
             widthStroke: this.border,
             center: true,
             ...this.bounds

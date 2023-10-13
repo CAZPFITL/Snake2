@@ -1,19 +1,21 @@
-import SnakeControls from "../src/Controls.js";
+import SnakeControls from '../src/Controls.js'
+import Tools from '../../Engine/core/Tools.js'
 
 /**
  * Represents a snake entity in the game.
  */
 class Snake {
+    color = `rgb(${Tools.random(0,255,true)},${Tools.random(0,255,true)},${Tools.random(0,255,true)})`
     id = 0
     head = {x: 0, y: 0}
     body = [{x: 0, y: 0}]
     width = 1
-    length = 2
+    length = 200
     acceleration = 0.02
-    maxSpeed = 0.65
-    normalSpeed = 0.5
-    minSpeed = 0.35
-    turnSpeed = 0.1
+    maxSpeed = 0.8
+    normalSpeed = 0.4
+    minSpeed = 0.3
+    turnSpeed = 0.2
     speed = 0.5
     angle = 0
     alive = true
@@ -83,7 +85,7 @@ class Snake {
      */
     updateAngle() {
         if (this.controls.left === 1 || this.controls.right === 1) {
-            this.angle += (this.controls.left === 1 ? -1 : 1) * this.turnSpeed;
+            this.angle += (this.controls.left === 1 ? -1 : 1) * this.turnSpeed / 2;
         }
 
         // Keep angle within a readable range
@@ -150,14 +152,16 @@ class Snake {
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
      */
     draw = (ctx = this.app.gui.ctx) => {
-        this.app.gui.get.path({
-            ctx,
-            collection: [this.head, ...this.body],
-            color: 'rgb(255, 0, 255)',
-            width: this.width,
-            lineCap: 'round',
-            scale: 1
-        }, true)
+        const appGui = this.app.gui.get
+        const lineWidth = this.width
+        const lineCap = 'round'
+        const scale = 1
+        const opts = { ctx, width: lineWidth, lineCap, scale }
+        appGui.path({ collection: this.body, color: this.color, ...opts }, true)
+        appGui.path({ collection: this.body.slice(0, 3), color: '#00000050', ...opts }, true)
+        appGui.path({ collection: this.body.slice(0, 2), color: '#00000050', ...opts }, true)
+        appGui.path({ collection: [this.head, this.body[0]], color: '#000000', ...opts }, true)
+
     }
 
     /**
