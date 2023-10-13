@@ -1,4 +1,4 @@
-import SnakeControls from '../src/Controls.js'
+import Controls from '../src/Controls.js'
 import Tools from '../../Engine/core/Tools.js'
 
 /**
@@ -13,8 +13,8 @@ class Snake {
     length = 200
     acceleration = 0.02
     maxSpeed = 0.8
-    normalSpeed = 0.3
-    minSpeed = 0.2
+    normalSpeed = 0.4
+    minSpeed = 0.1
     turnSpeed = 0.2
     speed = 0.5
     angle = 0
@@ -30,7 +30,7 @@ class Snake {
     constructor({ app, id = 0 }) {
         this.app = app
         this.id = id
-        this.controls = new SnakeControls(app, this)
+        this.controls = new Controls(app)
     }
 
     /**

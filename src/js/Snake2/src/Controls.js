@@ -3,8 +3,7 @@ class Controls {
     reverse = 0
     right = 0
     left = 0
-    touchStartX = 0;
-    touchStartY = 0;
+
     constructor(app) {
         this.app = app
         const props = Object.getOwnPropertyNames(this);
@@ -12,6 +11,11 @@ class Controls {
         eventTypes.forEach(eventType => {
             app.listeners.pushListener(eventType, this[eventType]);
         });
+        // initialize update method
+        if ('ontouchstart' in window) {
+            this.joystick = new JoyStick('joystick')
+            this.app.looper.push(this)
+        }
     }
 
     /**
@@ -62,40 +66,11 @@ class Controls {
         }
     }
 
-    touchstart = (event) => {
-        event.preventDefault();
-        const touch = event.touches[0];
-        this.touchStartX = touch.clientX;
-        this.touchStartY = touch.clientY;
-    }
-
-    touchmove = (event) => {
-        event.preventDefault();
-
-        const touch = event.touches[0];
-        const deltaX = touch.clientX - this.touchStartX;
-        const deltaY = touch.clientY - this.touchStartY;
-
-        if (deltaX > 0) {
-            this.right = deltaX / window.innerWidth * 1.5;
-        }
-        if (deltaX < 0) {
-            this.left = -deltaX / window.innerHeight * 1.5;
-        }
-        if (deltaY < 0) {
-            this.forward = 1;
-        }
-        if (deltaY > 0) {
-            this.reverse = 1;
-        }
-    }
-
-    touchend = () => {
-        // Reset all movement when the touch ends.
-        this.forward = 0;
-        this.reverse = 0;
-        this.right = 0;
-        this.left = 0;
+    update = () => {
+        this.forward = this.joystick.GetY() > 20 ? 1 : 0
+        this.reverse = this.joystick.GetY() < 0 ? 1 : 0
+        this.right = this.joystick.GetX() > 20 ? this.joystick.GetX() / 100 : 0
+        this.left = this.joystick.GetX() < 20 ? -this.joystick.GetX() / 100 : 0
     }
 }
 
