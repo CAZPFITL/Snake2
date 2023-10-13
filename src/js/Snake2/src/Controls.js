@@ -5,7 +5,6 @@ class Controls {
     left = 0
     touchStartX = 0;
     touchStartY = 0;
-    sensitivityThreshold = 100;
 
     /**
      * Create a new Controls instance to manage movement controls.
@@ -79,27 +78,26 @@ class Controls {
 
     touchmove = (event) => {
         event.preventDefault();
+        function mapValue(value, inMin, inMax, outMin, outMax) {
+            // Map value from the input range (inMin to inMax) to the output range (outMin to outMax)
+            return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+        }
+
         const touch = event.touches[0];
         const deltaX = touch.clientX - this.touchStartX;
         const deltaY = touch.clientY - this.touchStartY;
 
-        alert(deltaX, deltaY)
+        alert(deltaX, deltaY);
 
-        if (Math.abs(deltaX) > this.sensitivityThreshold) {
-            this.right = deltaX > 0 ? deltaX : 0;
-            this.left = deltaX < 0 ? deltaX : 0;
-        } else {
-            this.right = 0;
-            this.left = 0;
-        }
+        // Definir el rango deseado para el delta (entre 0 y 0.2)
+        const minRange = 0;
+        const maxRange = 0.2;
 
-        if (Math.abs(deltaY) > this.sensitivityThreshold) {
-            this.reverse = deltaY > 0 ? deltaY : 0;
-            this.forward = deltaY < 0 ? deltaY : 0;
-        } else {
-            this.reverse = 0;
-            this.forward = 0;
-        }
+        // Mapear deltaX y deltaY al rango deseado sin sensitivityThreshold
+        this.right = mapValue(deltaX, -Infinity, Infinity, minRange, maxRange);
+        this.left = mapValue(deltaX, -Infinity, Infinity, minRange, maxRange);
+        this.reverse = mapValue(deltaY, -Infinity, Infinity, minRange, maxRange);
+        this.forward = mapValue(deltaY, -Infinity, Infinity, minRange, maxRange);
     }
 
     touchend = () => {
