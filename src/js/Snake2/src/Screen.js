@@ -19,33 +19,31 @@ export default class Screen {
         }, this.gui.camera.viewport)
 
         app.gui.hover((key) => {
-                this.gui.buttonsStates[key] !== 'click' && (this.gui.buttonsStates[key] = 'hover')
+                const ctx = this.gui.decorations[this.app.state][key].props.ctx
                 this.gui.elementHovered = key
-                this.gui.ctx.canvas.style.cursor = 'pointer'
-                buttons[key].props.callbacks.mousemove?.(event, hoverTranslatedCoords)
+                ctx.canvas.style.cursor = 'pointer'
+                // buttons[key].props.callbacks.mousemove?.(event, hoverTranslatedCoords)
             }, (key) => {
+                const ctx = this.gui.decorations[this.app.state][key].props.ctx
                 this.gui.elementHovered = null
-                this.gui.ctx.canvas.style.cursor = 'default'
+                ctx.canvas.style.cursor = 'default'
             }, event)
     }
 
     mouseClick = (event, type)=>{
-        const coords = this.gui.get.viewportCoords({
-            x: event.offsetX,
-            y: event.offsetY
-        }, this.gui.camera.viewport)
-
         const buttons = this.gui.buttonsCollection
 
         Object.keys(buttons).forEach(key => {
-            this.gui.get.isClicked(
-                buttons[key].props,
-                coords,
-                () => {
-                    this.gui.buttonsStates[key] = type === 'mousedown' ? 'click' : 'normal'
-                    buttons[key].props.callbacks[type]?.(event)
+            if (key === this.gui.elementHovered) {
+                if (type === 'mousedown') {
+                    this.gui.buttonsStates[key] = 'click'
                 }
-            )
+                buttons[key].props.callbacks[type]?.(event)
+            }
+
+            if (type !== 'mousedown') {
+                this.gui.buttonsStates[key] = 'normal'
+            }
         })
     }
 
@@ -69,6 +67,35 @@ export default class Screen {
         this.gui.decorations = {
             LOAD_GAME: {
                 stateBg: '#000000'
+            },
+            MENU_MAIN: {
+                stateBg: '#ffb3fc',
+                startButton: {
+                    type: 'button',
+                    props: {
+                        ctx: this.app.gui.windowCtx,
+                        font: '30px Mouse',
+                        text: 'START',
+                        x: window.innerWidth / 2,
+                        y: window.innerHeight / 2,
+                        width: 200,
+                        height: 50,
+                        bg: this.gui.elementHovered === 'startButton' ? COLORS.WHITE[9]
+                            : this.gui.buttonsStates.startButton === 'click' ? COLORS.BLACK[0]
+                                : COLORS.WHITE[0],
+                        color: this.gui.buttonsStates.startButton === 'click' ? COLORS.WHITE[0] : COLORS.BLACK[0],
+                        stroke: this.gui.buttonsStates.startButton === 'click' ? COLORS.WHITE[0] : COLORS.BLACK[0],
+                        center: true,
+                        widthStroke: 1,
+                        textPosition: { x: 5, y: 5 },
+                        callbacks: {
+                            click: () => {
+                                console.log(1111111)
+                                // this.app.setState('PLAY');
+                            }
+                        }
+                    }
+                }
             },
             PLAY: {
                 stateBg: '#000000',
