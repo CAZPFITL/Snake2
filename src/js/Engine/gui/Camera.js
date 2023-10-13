@@ -65,38 +65,6 @@ export default class Camera {
         ctx.translate(-this.viewport.left, -this.viewport.top)
     }
 
-    controls(event) {
-        {
-            event.preventDefault()
-            event.stopPropagation()
-            const delta = Math.max(-this.rate, Math.min(this.rate, event.deltaY))
-
-            if (event.ctrlKey) {
-                let zoomLevel = this.zoom + Math.floor(delta)
-
-                this.zoomTo(
-                    (zoomLevel <= this.minZoom) ?
-                        this.minZoom :
-                        (zoomLevel >= this.maxZoom) ?
-                            this.maxZoom :
-                            zoomLevel
-                )
-            } else {
-                if (event.shiftKey) {
-                    this.moveTo([
-                        this.lookAt[0] + Math.floor(delta),
-                        this.lookAt[1]
-                    ])
-                } else {
-                    this.moveTo([
-                        this.lookAt[0],
-                        this.lookAt[1] + Math.floor(delta),
-                    ])
-                }
-            }
-        }
-    }
-
     begin = (ctx = this.app.gui.ctx, viewport = true) => {
         ctx.canvas.height = window.innerHeight
         ctx.canvas.width = window.innerWidth

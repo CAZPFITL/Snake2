@@ -1,58 +1,19 @@
-import {COLORS} from './env.js'
+import {COLORS} from './../env.js'
+import EventsMethods from './EventsMethods.js'
 
-export default class Screen {
-    app
-    gui
-
+export default class Screen extends EventsMethods {
     constructor(app) {
+        super()
         this.app = app
-        this.gui = this.app.gui
         this.init(app)
-    }
-
-    mouseMove = (event) => {
-        const buttons = this.gui.buttonsCollection
-
-        const hoverTranslatedCoords = this.gui.get.viewportCoords({
-            x: event.offsetX,
-            y: event.offsetY
-        }, this.gui.camera.viewport)
-
-        app.gui.hover((key) => {
-                const ctx = this.gui.decorations[this.app.state][key].props.ctx
-                this.gui.elementHovered = key
-                // ctx.canvas.style.cursor = 'pointer'
-                buttons[key].props.callbacks?.mousemove?.(event, hoverTranslatedCoords)
-            }, (key) => {
-                const ctx = this.gui.decorations[this.app.state][key].props.ctx
-                this.gui.elementHovered = null
-                // ctx.canvas.style.cursor = 'default'
-            }, event)
-    }
-
-    mouseClick = (event, type)=>{
-        const buttons = this.gui.buttonsCollection
-
-        Object.keys(buttons).forEach(key => {
-            if (key === this.gui.elementHovered) {
-                if (type === 'mousedown') {
-                    this.gui.buttonsStates[key] = 'click'
-                }
-                buttons[key].props.callbacks[type]?.(event)
-            }
-
-            if (type !== 'mousedown') {
-                this.gui.buttonsStates[key] = 'normal'
-            }
-        })
     }
 
     init() {
         this.app.listeners
-            .pushListener('mousemove', this.mouseMove)
-            .pushListener('mousedown', (event) => this.mouseClick(event, 'mousedown'))
-            .pushListener('mouseup', (event) => this.mouseClick(event, 'mouseup'))
-            .pushListener('wheel', (event) => this.app.gui.camera.controls(event))
+            .pushListener('mousemove', this.mousemove)
+            .pushListener('mousedown', this.mousedown)
+            .pushListener('mouseup', this.mouseup)
+            .pushListener('wheel', this.wheel)
 
         this.app.gui.camera
             .setProp('maxZoom', 600)
@@ -62,9 +23,19 @@ export default class Screen {
     }
 
     update(){
-        const ctx = this.gui.ctx
+        const getButtonStates = (variant, key) => {
+            let state = this.app.gui.elementHovered === key ? 'hover' : (this.app.gui.buttonsStates[key] ?? 'normal')
 
-        this.gui.decorations = {
+            state = this.app.gui.buttonsStates[key] === 'click' ? 'click' : state
+
+            return ({
+                bg: variant[state].bg,
+                color: variant[state].color,
+                stroke: variant[state].stroke,
+            })
+        }
+
+        this.app.gui.decorations = {
             LOAD_GAME: {
                 stateBg: '#000000'
             },
@@ -76,15 +47,27 @@ export default class Screen {
                         ctx: this.app.gui.windowCtx,
                         font: '30px Mouse',
                         text: 'START',
-                        x: window.innerWidth / 2,
+                        x: window.innerWidth / 2 - 100,
                         y: window.innerHeight / 2,
                         width: 200,
                         height: 50,
-                        bg: this.gui.elementHovered === 'startButton' ? COLORS.WHITE[9]
-                            : this.gui.buttonsStates.startButton === 'click' ? COLORS.BLACK[0]
-                                : COLORS.WHITE[0],
-                        color: this.gui.buttonsStates.startButton === 'click' ? COLORS.WHITE[0] : COLORS.BLACK[0],
-                        stroke: this.gui.buttonsStates.startButton === 'click' ? COLORS.WHITE[0] : COLORS.BLACK[0],
+                        ...getButtonStates({
+                            normal: {
+                                bg: COLORS.WHITE[0],
+                                color: COLORS.BLACK[0],
+                                stroke: COLORS.BLACK[0]
+                            },
+                            hover: {
+                                bg: COLORS.WHITE[9],
+                                color: COLORS.BLACK[0],
+                                stroke: COLORS.BLACK[0]
+                            },
+                            click: {
+                                bg: COLORS.BLACK[0],
+                                color: COLORS.WHITE[0],
+                                stroke: COLORS.WHITE[0]
+                            }
+                        }, 'startButton'),
                         center: true,
                         widthStroke: 1,
                         textPosition: { x: 5, y: 5 },
