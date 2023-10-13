@@ -21,12 +21,12 @@ export default class Screen {
         app.gui.hover((key) => {
                 const ctx = this.gui.decorations[this.app.state][key].props.ctx
                 this.gui.elementHovered = key
-                ctx.canvas.style.cursor = 'pointer'
-                // buttons[key].props.callbacks.mousemove?.(event, hoverTranslatedCoords)
+                // ctx.canvas.style.cursor = 'pointer'
+                buttons[key].props.callbacks?.mousemove?.(event, hoverTranslatedCoords)
             }, (key) => {
                 const ctx = this.gui.decorations[this.app.state][key].props.ctx
                 this.gui.elementHovered = null
-                ctx.canvas.style.cursor = 'default'
+                // ctx.canvas.style.cursor = 'default'
             }, event)
     }
 
@@ -47,7 +47,7 @@ export default class Screen {
         })
     }
 
-    init(app) {
+    init() {
         this.app.listeners
             .pushListener('mousemove', this.mouseMove)
             .pushListener('mousedown', (event) => this.mouseClick(event, 'mousedown'))
@@ -89,9 +89,8 @@ export default class Screen {
                         widthStroke: 1,
                         textPosition: { x: 5, y: 5 },
                         callbacks: {
-                            click: () => {
-                                console.log(1111111)
-                                // this.app.setState('PLAY');
+                            mouseup: () => {
+                                this.app.game.setPlayState()
                             }
                         }
                     }

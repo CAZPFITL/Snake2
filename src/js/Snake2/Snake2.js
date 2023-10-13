@@ -19,6 +19,7 @@ export default class Snake2 {
         this.app.setState('PLAY')
         this.app.level = new Level({ app: this.app })
         this.app.looper.push(this.app.level)
+        this.app.listeners.init()
     }
 
     follow() {
