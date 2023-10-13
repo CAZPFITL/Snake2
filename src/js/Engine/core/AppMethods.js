@@ -1,25 +1,39 @@
-import Gui from '../gui/Gui.js'
-import Animation from './Animation.js'
-import Listeners from './Listeners.js'
-import StateManager from './StateManager.js'
-import Tools from './Tools.js'
+import Gui from '../gui/Gui.js';
+import Animation from './Animation.js';
+import Listeners from './Listeners.js';
+import StateManager from './StateManager.js';
+import Tools from './Tools.js';
 
+/**
+ * Represents a base class for managing a game application.
+ */
 export default class AppMethods extends StateManager {
-    tools = Tools;
-    looper;
-    listeners;
-    animation;
+    tools = Tools; // A reference to the Tools class for utility functions.
+    looper; // Stores components for the game loop.
+    listeners; // Manages event listeners.
+    animation; // Manages animations and state transitions.
+
+    /**
+     * Initializes the AppMethods class.
+     *
+     * @param {Class} Game - The main game class to be instantiated.
+     */
     constructor(Game) {
-        super()
-        new Animation(this)
-        new Listeners(this)
+        super(); // Initialize the state manager.
+        new Animation(this); // Create an instance of the Animation class.
+        new Listeners(this); // Create an instance of the Listeners class.
+
+        // Initialize the looper array with Gui and Game components.
         this.looper = [
-            new Gui(this),
-            new Game(this)
-        ]
+            new Gui(this), // Create an instance of the Gui class.
+            new Game(this), // Create an instance of the Game class.
+        ];
     }
 
+    /**
+     * Initializes the game application.
+     */
     init() {
-        this.animation.start('LOAD_GAME')
+        this.animation.start('LOAD_GAME'); // Start the animation with the initial state.
     }
 }

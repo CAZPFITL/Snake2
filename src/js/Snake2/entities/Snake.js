@@ -1,5 +1,8 @@
 import SnakeControls from "../src/Controls.js";
 
+/**
+ * Represents a snake entity in the game.
+ */
 class Snake {
     id = 0
     head = {x: 0, y: 0}
@@ -15,12 +18,22 @@ class Snake {
     angle = 0
     alive = true
 
+    /**
+     * Create a new `Snake` instance associated with the provided application and optional ID.
+     *
+     * @param {Object} options - An object containing game-related options.
+     * @param {App} options.app - The application instance.
+     * @param {number} [options.id=0] - The unique identifier for the snake.
+     */
     constructor({ app, id = 0 }) {
         this.app = app
         this.id = id
         this.controls = new SnakeControls(app, this)
     }
 
+    /**
+     * Check if the snake collides with the game level's boundaries and set its alive state accordingly.
+     */
     checkBoundCollision(){
         const { x, y, width, height } = this.app.level.bounds;
         const adjustment = this.width / 2 + this.app.level.border / 2
@@ -34,6 +47,9 @@ class Snake {
         this.alive = !check;
     }
 
+    /**
+     * Check if the snake collides with itself, and set its alive state accordingly.
+     */
     checkSelfCollision() {
         /**
          * The 'precisionReliabilityTradeOff' variable represents the balance between precision and reliability.
@@ -62,6 +78,9 @@ class Snake {
         }
     }
 
+    /**
+     * Update the snake's angle based on user controls for turning left and right.
+     */
     updateAngle() {
         if (this.controls.left === 1 || this.controls.right === 1) {
             this.angle += (this.controls.left === 1 ? -1 : 1) * this.turnSpeed;
@@ -71,6 +90,9 @@ class Snake {
         this.angle %= 2 * Math.PI;
     }
 
+    /**
+     * Update the snake's speed based on user controls for accelerating and reversing.
+     */
     updateSpeed() {
         if (this.controls.forward === 1) {
             if (this.controls.reverse === 0 && this.speed <= this.maxSpeed) {
@@ -85,6 +107,9 @@ class Snake {
         }
     }
 
+    /**
+     * Update the snake's body length when it consumes food items.
+     */
     updateBodyLength() {
         const distanceToFood = this.app.tools.calculateDistance(this.head, this.app.level.activeFood)
         const minimumDistanceToEat = this.app.level.activeFood.radius + ( this.width / 2 )
@@ -97,6 +122,9 @@ class Snake {
         }
     }
 
+    /**
+     * Update the snake's position based on its current speed and angle.
+     */
     updatePosition() {
         if (this.speed > 0) {
             const velocityX = this.speed * Math.cos(this.angle)
@@ -116,6 +144,11 @@ class Snake {
         }
     }
 
+    /**
+     * Draw the snake on the canvas context.
+     *
+     * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
+     */
     draw = (ctx = this.app.gui.ctx) => {
         this.app.gui.get.path({
             ctx,
@@ -127,6 +160,9 @@ class Snake {
         }, true)
     }
 
+    /**
+     * Update the snake by executing speed, position, angle, body length, bound collision, and self-collision checks.
+     */
     update = () => {
         if (this.alive) {
             this.updateSpeed()

@@ -1,13 +1,24 @@
-import {COLORS} from './../env.js'
+import {BUTTONS} from './../env.js'
 import EventsMethods from './EventsMethods.js'
 
+/**
+ * Represents a screen in the application, handling events and rendering components.
+ */
 export default class Screen extends EventsMethods {
+    /**
+     * Create a new `Screen` instance.
+     *
+     * @param {App} app - The application instance.
+     */
     constructor(app) {
         super()
         this.app = app
         this.init(app)
     }
 
+    /**
+     * Initialize the screen by setting up event listeners and configuring the camera.
+     */
     init() {
         this.app.listeners
             .pushListener('mousemove', this.mousemove)
@@ -22,19 +33,29 @@ export default class Screen extends EventsMethods {
             .setProp('lookAt', [0, 0])
     }
 
+    /**
+     * Get the button states for a given key and variant.
+     *
+     * @param {string} key - The key for the button.
+     * @param {object} variant - The button variant configuration.
+     * @returns {object} - The button state properties (bg, color, stroke).
+     */
+    getButtonStates(key, variant) {
+        let state = this.app.gui.elementHovered === key ? 'hover' : (this.app.gui.buttonsStates[key] ?? 'normal')
+
+        state = this.app.gui.buttonsStates[key] === 'click' ? 'click' : state
+
+        return ({
+            bg: variant[state].bg,
+            color: variant[state].color,
+            stroke: variant[state].stroke,
+        })
+    }
+
+    /**
+     * Update the screen components, including buttons, text, and other decorations.
+     */
     update(){
-        const getButtonStates = (variant, key) => {
-            let state = this.app.gui.elementHovered === key ? 'hover' : (this.app.gui.buttonsStates[key] ?? 'normal')
-
-            state = this.app.gui.buttonsStates[key] === 'click' ? 'click' : state
-
-            return ({
-                bg: variant[state].bg,
-                color: variant[state].color,
-                stroke: variant[state].stroke,
-            })
-        }
-
         this.app.gui.decorations = {
             LOAD_GAME: {
                 stateBg: '#000000'
@@ -51,23 +72,7 @@ export default class Screen extends EventsMethods {
                         y: window.innerHeight / 2,
                         width: 200,
                         height: 50,
-                        ...getButtonStates({
-                            normal: {
-                                bg: COLORS.WHITE[0],
-                                color: COLORS.BLACK[0],
-                                stroke: COLORS.BLACK[0]
-                            },
-                            hover: {
-                                bg: COLORS.WHITE[9],
-                                color: COLORS.BLACK[0],
-                                stroke: COLORS.BLACK[0]
-                            },
-                            click: {
-                                bg: COLORS.BLACK[0],
-                                color: COLORS.WHITE[0],
-                                stroke: COLORS.WHITE[0]
-                            }
-                        }, 'startButton'),
+                        ...this.getButtonStates('startButton', BUTTONS.normal),
                         center: true,
                         widthStroke: 1,
                         textPosition: { x: 5, y: 5 },

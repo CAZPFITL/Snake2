@@ -3,6 +3,13 @@ class Controls {
     reverse = 0
     right = 0
     left = 0
+
+    /**
+     * Create a new Controls instance to manage movement controls.
+     *
+     * @param {App} app - The application instance.
+     * @param {Entity} entity - The entity for which controls are applied.
+     */
     constructor(app, entity) {
         this.app = app
         this.entity = entity
@@ -11,6 +18,11 @@ class Controls {
             .pushListener('keyup', this.onKeyUp)
     }
 
+    /**
+     * Handle the keyup event to stop movement in a specific direction.
+     *
+     * @param {Event} event - The keyup event.
+     */
     onKeyUp = (event) => {
         event.stopPropagation()
         // event.preventDefault()
@@ -30,6 +42,11 @@ class Controls {
         }
     }
 
+    /**
+     * Handle the keydown event to initiate movement in a specific direction.
+     *
+     * @param {Event} event - The keydown event.
+     */
     onKeyDown = (event) => {
         event.stopPropagation()
         // event.preventDefault()

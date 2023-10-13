@@ -1,6 +1,9 @@
 import ScreenObjects from "./ScreenObjects.js";
 import Camera from './Camera.js';
 
+/**
+ * The Gui class handles the graphical user interface for the game.
+ */
 export default class Gui extends ScreenObjects {
     app;
     ctx;
@@ -12,6 +15,12 @@ export default class Gui extends ScreenObjects {
     hoverCollection = {};
     buttonsStates = {};
     elementHovered = null;
+
+    /**
+     * Create a new Gui instance.
+     *
+     * @param {Object} app - The game application instance.
+     */
     constructor(app) {
         super();
         this.app = app;
@@ -21,6 +30,13 @@ export default class Gui extends ScreenObjects {
         app.gui = this;
     }
 
+    /**
+     * Handle hover events for GUI elements.
+     *
+     * @param {function} isHover - The callback function when an element is hovered.
+     * @param {function} isOut - The callback function when an element is no longer hovered.
+     * @param {Event} event - The hover event.
+     */
     hover(isHover, isOut, event){
         app.gui.get.checkHoverCollection({
             collection: this.hoverCollection,
@@ -32,6 +48,9 @@ export default class Gui extends ScreenObjects {
         });
     }
 
+    /**
+     * Update the GUI elements.
+     */
     update = () => {
         // DECLARE COLLECTION
         if (!this?.decorations) return;

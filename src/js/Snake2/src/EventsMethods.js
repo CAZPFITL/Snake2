@@ -1,6 +1,12 @@
 class EventsMethods {
     app
     gui
+
+    /**
+     * Handle the mouse wheel event to zoom or pan the camera.
+     *
+     * @param {Event} event - The mouse wheel event.
+     */
     wheel = (event) => {
         {
             event.preventDefault()
@@ -33,6 +39,11 @@ class EventsMethods {
         }
     }
 
+    /**
+     * Handle the mousemove event to track the position of the cursor.
+     *
+     * @param {Event} event - The mousemove event.
+     */
     mousemove = (event) => {
         const buttons = this.app.gui.buttonsCollection
 
@@ -44,6 +55,11 @@ class EventsMethods {
         }, event)
     }
 
+    /**
+     * Handle the mousedown event when a mouse button is pressed.
+     *
+     * @param {Event} event - The mousedown event.
+     */
     mousedown = (event)=>{
         const buttons = this.app.gui.buttonsCollection
 
@@ -55,6 +71,12 @@ class EventsMethods {
         })
     }
 
+
+    /**
+     * Handle the mouseup event when a mouse button is released.
+     *
+     * @param {Event} event - The mouseup event.
+     */
     mouseup = (event)=>{
         const buttons = this.app.gui.buttonsCollection
 

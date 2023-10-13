@@ -5,10 +5,14 @@ class Marker {
     size = 20
     polygons = []
     display = false
+
     constructor({app}) {
         this.app = app
     }
 
+    /**
+     * Update the angle of the marker based on the position of the active food item and the snake's head.
+     */
     updateAngle() {
         const dx = this.app.level.activeFood.x - this.app.level.player.head.x;
         const dy = this.app.level.activeFood.y - this.app.level.player.head.y;
@@ -16,15 +20,25 @@ class Marker {
         this.angle %= 2 * Math.PI;
     }
 
+    /**
+     * Update the distance from the marker to the active food item and determine if it should be displayed.
+     */
     updateDistance() {
         this.distance = this.app.tools.calculateDistance(this.app.level.player.head, this.app.level.activeFood)
         this.display = this.distance > 30
     }
+
+    /**
+     * Update the position of the marker based on its angle and distance.
+     */
     updatePosition() {
         this.x = window.innerWidth / 2 + this.distance * Math.cos(this.angle);
         this.y = window.innerHeight / 2 + this.distance * Math.sin(this.angle);
     }
 
+    /**
+     * Update the shape of the marker and calculate its vertices.
+     */
     updateShape() {
         let dist = this.distance / 100
         dist = (dist < 2 ? dist : 2)
@@ -50,6 +64,9 @@ class Marker {
         this.polygons = [vertex1, vertex2, vertex3];
     }
 
+    /**
+     * Draw the marker on the canvas context if it should be displayed and the snake is alive.
+     */
     draw() {
         if (!this.display || !this.app.level.player.alive) {
             return;
@@ -57,6 +74,9 @@ class Marker {
         this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, `${this.app.level.activeFood.color}50`)
     }
 
+    /**
+     * Update the marker by executing angle, position, distance, shape, and drawing updates.
+     */
     update = () => {
         this.updateAngle()
         this.updatePosition()
