@@ -83,6 +83,8 @@ class Controls {
         const deltaX = touch.clientX - this.touchStartX;
         const deltaY = touch.clientY - this.touchStartY;
 
+        alert(deltaX, deltaY)
+
         if (Math.abs(deltaX) > this.sensitivityThreshold) {
             this.right = deltaX > 0 ? deltaX : 0;
             this.left = deltaX < 0 ? deltaX : 0;
