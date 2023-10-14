@@ -8,6 +8,11 @@ export default class Screen extends EventsMethods {
     constructor(app) {
         super(app)
         this.app = app
+        app.gui.camera
+            .setProp('maxZoom', 2000)
+            .setProp('minZoom', 500)
+            .setProp('zoom', 500)
+            .setProp('lookAt', [0, 0])
     }
 
     /**

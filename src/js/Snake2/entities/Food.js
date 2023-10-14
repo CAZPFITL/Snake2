@@ -4,9 +4,10 @@ import Tools from '../../Engine/core/Tools.js'
  * Represents a food item in the game.
  */
 class Food {
-    radius = Tools.random(1, 5, true)
+    radius = 4
     isSpecial = Tools.random(0, 1000, true) < 50
     color = this.isSpecial ? '#00ffd9' : '#000000'
+    value = this.isSpecial ? 10 : 1
     /**
      * Create a new `Food` instance within the specified game level.
      *

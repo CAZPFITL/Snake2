@@ -2,13 +2,7 @@ class EventsMethods {
     app
     gui
 
-    constructor({ listeners, gui }) {
-        gui.camera
-            .setProp('maxZoom', 600)
-            .setProp('minZoom', 200)
-            .setProp('zoom', 200)
-            .setProp('lookAt', [0, 0])
-
+    constructor({ listeners }) {
         const props = Object.getOwnPropertyNames(this);
         const eventTypes = props.filter(prop => typeof this[prop] === 'function');
         eventTypes.forEach(eventType => {

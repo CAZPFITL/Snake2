@@ -1,5 +1,5 @@
 import Food from './Food.js'
-import Snake from './Snake.js'
+import Snake from './SnakeObject/Snake.js'
 import Marker from "./Marker.js";
 
 /**
@@ -8,13 +8,12 @@ import Marker from "./Marker.js";
 class Level {
     activeFood
     bounds = {
-        x: -100,
-        y: -100,
-        width: 200,
-        height: 200
+        x: -500,
+        y: -500,
+        width: 1000,
+        height: 1000
     }
-    multiplier = 1
-    border = 4
+    border = 10
 
     /**
      * Create a new `Level` instance within the specified application.
