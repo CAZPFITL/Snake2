@@ -28,7 +28,8 @@ class Snake extends SnakePhysics {
     /**
      * Update the snake's body length when it consumes food items.
      */
-    eat(level = this.app.level) {
+    eat() {
+        const level = this.app.level
         const distanceToFood = this.app.tools.calculateDistance(this.head, level.activeFood)
         const minimumDistanceToEat = level.activeFood.radius + ( this.radius / 2 )
 
@@ -42,13 +43,6 @@ class Snake extends SnakePhysics {
      * Update the snake's position based on its current speed and angle.
      */
     move() {
-        this.angle += this.turnSpeed
-
-        // Keep angle within a readable range
-        this.angle %= 2 * Math.PI;
-
-        this.speed += this.acceleration
-
         if (this.speed > 0) {
             const velocityX = this.speed * Math.cos(this.angle)
             const velocityY = this.speed * Math.sin(this.angle)
@@ -94,6 +88,7 @@ class Snake extends SnakePhysics {
             this.checkBoundCollision()
             this.checkSelfCollision()
             this.app.game.follow()
+            this.updatePhysics()
         }
         this.draw()
     }

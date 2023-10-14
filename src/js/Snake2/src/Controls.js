@@ -3,6 +3,8 @@ class Controls {
     reverse = 0
     right = 0
     left = 0
+    sensibility = 10
+    isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     constructor(app) {
         this.app = app
@@ -12,7 +14,7 @@ class Controls {
             app.listeners.pushListener(eventType, this[eventType]);
         });
         // initialize update method
-        if ('ontouchstart' in window) {
+        if (this.isMobile) {
             this.joystick = new JoyStick('joystick')
             this.app.looper.push(this)
         }
@@ -67,10 +69,10 @@ class Controls {
     }
 
     update = () => {
-        // this.forward = this.joystick.GetY() > 20 ? 1 : 0
-        // this.reverse = this.joystick.GetY() < 0 ? 1 : 0
-        this.right = this.joystick.GetX() > 20 ? this.joystick.GetX() / 100 : 0
-        this.left = this.joystick.GetX() < 20 ? -this.joystick.GetX() / 100 : 0
+        this.stick = {
+            x: this.joystick.GetX() / 100,
+            y: this.joystick.GetY() / 100
+        }
     }
 }
 

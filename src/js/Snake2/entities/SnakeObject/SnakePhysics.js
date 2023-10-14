@@ -2,7 +2,7 @@ import Controls from './../../src/Controls.js'
 
 class SnakePhysics {
     acceleration = 0
-    turnSpeed = 0.01
+    turnSpeed = 0
     speed = 0.5
     maxSpeed = 1
     minSpeed = 0.5
@@ -56,6 +56,29 @@ class SnakePhysics {
                 }
             }
         }
+    }
+
+    updateInputs() {
+        console.log(this.controls.stick)
+        this.turnSpeed = this.controls.stick.x / this.controls.sensibility
+        // this.turnSpeed = this.turnSpeed === 0 && this.controls.left > 0 ? -this.controls.left : 0
+        // this.turnSpeed = this.turnSpeed === 0 && this.controls.right > 0 ? this.controls.right : 0
+        // this.turnSpeed *= 0.1
+
+        // this.speed
+    }
+
+    updateData() {
+        this.angle += this.turnSpeed
+
+        // Keep angle within a readable range
+        this.angle %= 2 * Math.PI;
+
+        this.speed += this.acceleration
+    }
+    updatePhysics = () => {
+        this.updateInputs()
+        this.updateData()
     }
 }
 

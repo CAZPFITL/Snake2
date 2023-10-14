@@ -2,7 +2,7 @@ class Marker {
     x = window.innerWidth / 2
     y = window.innerHeight / 2
     angle = 0
-    size = 20
+    size = 10
     polygons = []
     display = false
 
@@ -32,8 +32,8 @@ class Marker {
      * Update the position of the marker based on its angle and distance.
      */
     updatePosition() {
-        this.x = window.innerWidth / 2 + this.distance * Math.cos(this.angle);
-        this.y = window.innerHeight / 2 + this.distance * Math.sin(this.angle);
+        this.x = window.innerWidth / 2 + Math.cos(this.angle) * 50;
+        this.y = window.innerHeight / 2 + Math.sin(this.angle) * 50;
     }
 
     /**
