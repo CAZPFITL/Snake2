@@ -86,8 +86,11 @@ export default class Screen extends EventsMethods {
                         ctx: this.app.gui.windowCtx,
                         x: window.innerWidth / 2 - 175,
                         y: window.innerHeight - 20,
-                        text: 'speed',
-                        textColor: '#ffcf5b',
+                        textProps: {
+                            font: '12px Mouse',
+                            text: 'speed',
+                            color: '#ffcf5b'
+                        },
                         height: 10,
                         fillColor: 'green',
                         stroke: 'black',
