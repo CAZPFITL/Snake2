@@ -74,11 +74,9 @@ export default class Screen extends EventsMethods {
                         ctx: this.app.gui.windowCtx,
                         font: '40px Mouse',
                         text: this.app?.level?.player?.length,
-                        x: 30,
+                        x: window.innerWidth / 2 - (String(this.app?.level?.player?.length).length * 10),
                         y: window.innerHeight - 20,
-                        color: '#ffffff',
-                        width: 0,
-                        height: 0
+                        color: '#ffffff'
                     }
                 }
             }

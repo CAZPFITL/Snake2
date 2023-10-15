@@ -4,9 +4,10 @@ import Tools from '../../Engine/core/Tools.js'
  * Represents a food item in the game.
  */
 class Food {
+    app
     radius = 4
     isSpecial = Tools.random(0, 1000, true) < 50
-    color = this.isSpecial ? '#00ffd9' : '#000000'
+    color = this.isSpecial ? 'rgba(0,255,217,' : 'rgba(0,0,0,'
     value = this.isSpecial ? 10 : 1
     /**
      * Create a new `Food` instance within the specified game level.
@@ -28,7 +29,11 @@ class Food {
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
      */
     draw(ctx = this.app.gui.ctx) {
-        this.app.gui.get.circle(ctx, this)
+        this.app.gui.get.circle({
+            ctx: this.app.gui.ctx,
+            fill: this.color + '1)',
+            ...this
+        })
     }
 
     /**

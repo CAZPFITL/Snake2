@@ -1,8 +1,5 @@
 class Controls {
-    forward = 0
-    reverse = 0
-    right = 0
-    left = 0
+    input = { x: 0, y: 0 }
     sensibility = 10
     isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
@@ -15,7 +12,8 @@ class Controls {
         });
         // initialize update method
         if (this.isMobile) {
-            this.joystick = new JoyStick('joystick')
+            this.xJoystick = new JoyStick('x-joystick')
+            this.yJoystick = new JoyStick('y-joystick')
             this.app.looper.push(this)
         }
     }
@@ -30,16 +28,18 @@ class Controls {
         // event.preventDefault()
         switch (event.key) {
             case 'ArrowUp':
-                this.forward = 0
+                this.input.y = 0
                 break;
             case 'ArrowDown':
-                this.reverse = 0
+                this.input.y = 0
                 break;
             case 'ArrowRight':
-                this.right = 0
+                this.input.x = 0
                 break;
             case 'ArrowLeft':
-                this.left = 0
+                this.input.x = 0
+                break;
+            default:
                 break;
         }
     }
@@ -54,24 +54,24 @@ class Controls {
         // event.preventDefault()
         switch (event.key) {
             case 'ArrowUp':
-                this.forward = 1
+                this.input.y = 1
                 break;
             case 'ArrowDown':
-                this.reverse = 1
+                this.input.y = -1
                 break;
             case 'ArrowRight':
-                this.right = 1
+                this.input.x = 1
                 break;
             case 'ArrowLeft':
-                this.left = 1
+                this.input.x = -1
                 break;
         }
     }
 
     update = () => {
-        this.stick = {
-            x: this.joystick.GetX() / 100,
-            y: this.joystick.GetY() / 100
+        this.input = {
+            x: this.xJoystick.GetX() / 100,
+            y: this.yJoystick.GetY() / 100
         }
     }
 }

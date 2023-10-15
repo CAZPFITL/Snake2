@@ -1,14 +1,16 @@
 import Controls from './../../src/Controls.js'
 
 class SnakePhysics {
+    x
+    y
+    app
+    head
+    body
+    radius
     acceleration = 0
     turnSpeed = 0
-    speed = 0.5
-    maxSpeed = 1
-    minSpeed = 0.5
+    speed = 1
     angle = 0
-    maxAngle = 0.2
-    minAngle = -0.2
     controls = new Controls(app)
 
     /**
@@ -16,12 +18,12 @@ class SnakePhysics {
      */
     checkBoundCollision(){
         const { x, y, width, height } = this.app.level.bounds;
-        const adjustment = this.width / 2 + this.app.level.border / 2
+        const adjustment = this.radius / 2 + this.app.level.border / 2
         const check = (
-            this.head.x < x + adjustment ||
-            this.head.x > x + width - adjustment ||
-            this.head.y < y + adjustment ||
-            this.head.y > y + height - adjustment
+            this.x < x + adjustment ||
+            this.x > x + width - adjustment ||
+            this.y < y + adjustment ||
+            this.y > y + height - adjustment
         )
 
         this.alive = !check;
@@ -37,10 +39,10 @@ class SnakePhysics {
          * but may decrease reliability. Adjust this value according to your specific requirements.
          * It is recommended not to use values lower than 4.
          */
-        const precisionReliabilityTradeOff = 4
+        const precisionReliabilityTradeOff = this.radius * 2
 
         const line1 = [
-            { x: this.head.x, y: this.head.y },
+            { x: this.x, y: this.y },
             {
                 x: this.body[this.body?.[precisionReliabilityTradeOff] ? precisionReliabilityTradeOff : this.body.length - 1].x,
                 y: this.body[this.body?.[precisionReliabilityTradeOff] ? precisionReliabilityTradeOff : this.body.length - 1].y
@@ -51,33 +53,21 @@ class SnakePhysics {
             if (this.body[i + precisionReliabilityTradeOff]) {
                 const line2 = [ this.body[i], this.body[i + precisionReliabilityTradeOff] ]
                 if (this.app.tools.segmentsIntersection(line1, line2)) {
-                    console.log({line1, line2})
                     this.alive = false
                 }
             }
         }
     }
 
-    updateInputs() {
-        console.log(this.controls.stick)
-        this.turnSpeed = this.controls.stick.x / this.controls.sensibility
-        // this.turnSpeed = this.turnSpeed === 0 && this.controls.left > 0 ? -this.controls.left : 0
-        // this.turnSpeed = this.turnSpeed === 0 && this.controls.right > 0 ? this.controls.right : 0
-        // this.turnSpeed *= 0.1
-
-        // this.speed
-    }
-
     updateData() {
         this.angle += this.turnSpeed
-
-        // Keep angle within a readable range
-        this.angle %= 2 * Math.PI;
-
+        this.angle %= 2 * Math.PI // Keep angle within a readable range
         this.speed += this.acceleration
+        this.turnSpeed = this.controls.input.x / this.controls.sensibility
+        this.acceleration = this.controls.input.y / this.controls.sensibility
     }
+
     updatePhysics = () => {
-        this.updateInputs()
         this.updateData()
     }
 }

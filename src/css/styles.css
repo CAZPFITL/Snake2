@@ -3,14 +3,21 @@
     src: local("Mouse"), url("./font.woff") format("woff");
 }
 
-#joystick {
+.joystick {
     position: absolute;
-    bottom: 0;
-    right: 0;
     z-index: 9999;
     width:200px;
     height:200px;
     margin-bottom:20px;
+    bottom: 0;
+}
+
+#y-joystick {
+    left: 0;
+}
+
+#x-joystick {
+    right: 0;
 }
 
 html {

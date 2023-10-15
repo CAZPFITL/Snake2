@@ -1,5 +1,4 @@
 import SnakePhysics from './SnakePhysics.js'
-import Controls from '../../src/Controls.js'
 import Tools from '../../../Engine/core/Tools.js'
 /**
  * Represents a snake entity in the game.
@@ -7,10 +6,12 @@ import Tools from '../../../Engine/core/Tools.js'
 class Snake extends SnakePhysics {
     color = `rgb(${Tools.random(0,255,true)},${Tools.random(0,255,true)},${Tools.random(0,255,true)})`
     id = 0
-    head = {x: 0, y: 0}
+    x = 0
+    y = 0
+    head = [{x: 0, y: 0}]
     body = [{x: 0, y: 0}]
     radius = 4
-    length = 10
+    length = 100
     alive = true
     /**
      * Create a new `Snake` instance associated with the provided application and optional ID.
@@ -30,7 +31,7 @@ class Snake extends SnakePhysics {
      */
     eat() {
         const level = this.app.level
-        const distanceToFood = this.app.tools.calculateDistance(this.head, level.activeFood)
+        const distanceToFood = this.app.tools.calculateDistance(this, level.activeFood)
         const minimumDistanceToEat = level.activeFood.radius + ( this.radius / 2 )
 
         if (distanceToFood < minimumDistanceToEat) {
@@ -46,14 +47,15 @@ class Snake extends SnakePhysics {
         if (this.speed > 0) {
             const velocityX = this.speed * Math.cos(this.angle)
             const velocityY = this.speed * Math.sin(this.angle)
-            const newHeadX = this.head.x + velocityX
-            const newHeadY = this.head.y + velocityY
+            const x = this.x + velocityX
+            const y = this.y + velocityY
 
-            this.head = { x: newHeadX, y: newHeadY }
+            this.x = x
+            this.y = y
 
             // Update body
-            if (this.app.tools.calculateDistance(this.head, this.body[0]) > this.radius) {
-                this.body = [this.head, ...this.body]
+            if (this.app.tools.calculateDistance({x, y}, this.body[0]) > this.radius / 2) {
+                this.body = [{x, y}, ...this.body]
 
                 if (this.body.length > this.length) {
                     this.body.pop()
@@ -73,8 +75,8 @@ class Snake extends SnakePhysics {
         const lineCap = 'round'
         const scale = 1
         const opts = { ctx, width: lineWidth, lineCap, scale }
-        appGui.path({ collection: [this.head, ...this.body], color: this.color, ...opts }, true)
-        appGui.path({ collection: [this.head], color: '#000000', ...opts }, true)
+        appGui.path({ collection: this.body, color: this.color, ...opts })
+        // appGui.path({ collection: [this.head], color: '#000000', ...opts })
 
     }
 

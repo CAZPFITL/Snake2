@@ -42,8 +42,8 @@ export default class Snake2 {
      */
     follow() {
         this.app.gui.camera.moveTo([
-            this.app.level.player.head.x,
-            this.app.level.player.head.y
+            this.app.level.player.x,
+            this.app.level.player.y
         ])
     }
 

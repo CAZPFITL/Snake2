@@ -71,7 +71,8 @@ class Marker {
         if (!this.display || !this.app.level.player.alive) {
             return;
         }
-        this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, `${this.app.level.activeFood.color}50`)
+        const fill = `${this.app.level.activeFood.color}${this.distance/1000})`
+        this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, fill)
     }
 
     /**

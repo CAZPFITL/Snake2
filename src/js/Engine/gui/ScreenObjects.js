@@ -1,11 +1,11 @@
-import ScreenMethods from './ScreenMethods.js';
+import ScreenMethods from './ScreenMethods.js'
 
 /**
  * A collection of static methods for drawing various screen objects and shapes.
  */
 export default class ScreenObjects extends ScreenMethods {
     constructor() {
-        super();
+        super()
     }
 
     /**
@@ -16,19 +16,19 @@ export default class ScreenObjects extends ScreenMethods {
      * @param {string} [fill='#000'] - The fill color for the polygon.
      */
     static polygon(ctx, collection, fill = '#000') {
-        ctx.save();
-        if (collection.length < 1) return;
+        ctx.save()
+        if (collection.length < 1) return
 
-        ctx.beginPath();
-        ctx.moveTo(collection[0].x, collection[0].y);
+        ctx.beginPath()
+        ctx.moveTo(collection[0].x, collection[0].y)
 
         for (let i = 1; i < collection.length; i++) {
-            ctx.lineTo(collection[i].x, collection[i].y);
+            ctx.lineTo(collection[i].x, collection[i].y)
         }
 
-        ctx.fillStyle = fill;
-        ctx.fill();
-        ctx.restore();
+        ctx.fillStyle = fill
+        ctx.fill()
+        ctx.restore()
     }
 
     /**
@@ -36,16 +36,18 @@ export default class ScreenObjects extends ScreenMethods {
      *
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
      * @param {Object} entity - An object representing the circle with properties like x, y, radius, and color.
-     * @param {boolean} [fill=true] - If true, fill the circle; otherwise, stroke it.
+     * @param {string} [fill=true] - If true, fill the circle otherwise, stroke it.
      */
-    static circle(ctx, entity, fill = true) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(entity.x, entity.y, entity.radius, 0, 2 * Math.PI);
-        ctx.closePath();
-        ctx.strokeStyle = ctx.fillStyle = entity.color;
-        fill ? ctx.fill() : ctx.stroke();
-        ctx.restore();
+    static circle({ctx, x, y, radius, fill = 'rgba(0,0,0,1)', stroke = 'rgba(0,0,0,1)', widthStroke = 0}) {
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, 2 * Math.PI)
+        ctx.closePath()
+        ctx.lineWidth  = widthStroke
+        ctx.strokeStyle = stroke
+        ctx.fillStyle = fill
+        fill ? ctx.fill() : ctx.stroke()
+        ctx.restore()
     }
 
     /**
@@ -81,10 +83,10 @@ export default class ScreenObjects extends ScreenMethods {
         widthStroke = 1,
         textPosition = { x: 0, y: 0 }
     }) {
-    ctx.save();
-    this.square({ctx, x, y, width, height, color: bg, stroke, widthStroke});
-    this.text({ctx, font, color, text, x: x + textPosition.x, y: y + textPosition.y, width, height, center});
-    ctx.restore();
+    ctx.save()
+    this.square({ctx, x, y, width, height, color: bg, stroke, widthStroke})
+    this.text({ctx, font, color, text, x: x + textPosition.x, y: y + textPosition.y, width, height, center})
+    ctx.restore()
     }
 
     /**
@@ -101,20 +103,20 @@ export default class ScreenObjects extends ScreenMethods {
      * @param {number} [options.widthStroke=1] - The stroke width.
      */
     static square({ctx, x, y, width, height, color = '#FFF', stroke = false, widthStroke = 1}) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(x, y, width, height);
-        ctx.fillStyle = color;
-        ctx.fill();
+        ctx.save()
+        ctx.beginPath()
+        ctx.rect(x, y, width, height)
+        ctx.fillStyle = color
+        ctx.fill()
 
         if (stroke) {
-            const cache = ctx.lineWidth;
-            ctx.strokeStyle = stroke;
-            ctx.lineWidth = widthStroke;
-            ctx.stroke();
-            ctx.lineWidth = cache;
+            const cache = ctx.lineWidth
+            ctx.strokeStyle = stroke
+            ctx.lineWidth = widthStroke
+            ctx.stroke()
+            ctx.lineWidth = cache
         }
-        ctx.restore();
+        ctx.restore()
     }
 
     /**
@@ -132,14 +134,14 @@ export default class ScreenObjects extends ScreenMethods {
      * @param {boolean} [options.center=false] - Whether to center the text in the area.
      */
     static text({ctx, font, color, text, x, y, width, height, center = false}) {
-        ctx.save();
-        ctx.font = font;
-        ctx.fillStyle = color;
-        const xText = x + width / 2 - ctx.measureText(text).width / 2;
-        const yText = y + height / 2 + 5;
-        ctx.fillText(text, center ? xText : x, center ? yText : y);
-        return ctx.measureText(text).width;
-        ctx.restore();
+        ctx.save()
+        ctx.font = font
+        ctx.fillStyle = color
+        const xText = x + width / 2 - ctx.measureText(text).width / 2
+        const yText = y + height / 2 + 5
+        ctx.fillText(text, center ? xText : x, center ? yText : y)
+        return ctx.measureText(text).width
+        ctx.restore()
     }
 
     /**
@@ -170,28 +172,28 @@ export default class ScreenObjects extends ScreenMethods {
        barColor = 'transparent',
        stroke
    }, negative = false) {
-        ctx.save();
-        const normalizedProgress = fill / (cap / 255);
-        const progress = negative ? cap - fill : fill;
+        ctx.save()
+        const normalizedProgress = fill / (cap / 255)
+        const progress = negative ? cap - fill : fill
 
-        ctx.fillStyle = barColor;
-        ctx.fillRect(x, y, cap, height);
+        ctx.fillStyle = barColor
+        ctx.fillRect(x, y, cap, height)
 
         if (stroke) {
-        ctx.strokeStyle = stroke;
-        ctx.strokeRect(x, y, cap, height);
+        ctx.strokeStyle = stroke
+        ctx.strokeRect(x, y, cap, height)
         }
 
         ctx.fillStyle = fillColor === 'green-red'
         ? `rgb(${normalizedProgress}, ${255 - normalizedProgress}, 0)`
         : fillColor === 'red-green'
             ? `rgb(${255 - normalizedProgress}, ${normalizedProgress}, 0)`
-            : fillColor;
+            : fillColor
 
-        ctx.fillRect(x, y, progress, height);
+        ctx.fillRect(x, y, progress, height)
 
-        text && this.text({ctx, font: '12px Mouse', color: '#000', text, x, y: y - height});
-        ctx.restore();
+        text && this.text({ctx, font: '12px Mouse', color: '#000', text, x, y: y - height})
+        ctx.restore()
     }
 
     /**
@@ -208,17 +210,17 @@ export default class ScreenObjects extends ScreenMethods {
      * @param {string} [options.lineCap] - The line cap style.
      */
     static line({ctx, x1, y1, x2, y2, color = '#000', width, lineCap}) {
-        ctx.save();
-        ctx.lineWidth = width;
-        ctx.lineCap = lineCap;
+        ctx.save()
+        ctx.lineWidth = width
+        ctx.lineCap = lineCap
 
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+        ctx.beginPath()
+        ctx.moveTo(x1, y1)
+        ctx.lineTo(x2, y2)
 
-        ctx.strokeStyle = color;
-        ctx.stroke();
-        ctx.restore();
+        ctx.strokeStyle = color
+        ctx.stroke()
+        ctx.restore()
     }
 
     /**
@@ -233,20 +235,20 @@ export default class ScreenObjects extends ScreenMethods {
      * @param {number} [options.scale] - The scale factor for the path.
      */
     static path({ctx, collection, color = '#000', width, lineCap, scale}) {
-        ctx.save();
-        ctx.lineWidth = width;
-        ctx.lineCap = lineCap;
+        ctx.save()
+        ctx.lineWidth = width
+        ctx.lineCap = lineCap
 
         // Draw the vectors path
-        ctx.beginPath();
-        ctx.strokeStyle = color;
+        ctx.beginPath()
+        ctx.strokeStyle = color
         for (const element of collection) {
-            const x = element.x / scale;
-            const y = element.y / scale;
-            ctx.lineTo(x, y);
+            const x = element.x / scale
+            const y = element.y / scale
+            ctx.lineTo(x, y)
         }
-        ctx.stroke();
-        ctx.restore();
+        ctx.stroke()
+        ctx.restore()
     }
 
     /**
@@ -262,12 +264,12 @@ export default class ScreenObjects extends ScreenMethods {
      * @param {boolean} [fill=true] - Whether to fill the ellipse (true by default).
      */
     static ellipse(ctx, entity, fill = true) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.ellipse(entity.x, entity.y, entity.radiusX, entity.radiusY, 0, 0, 2 * Math.PI);
-        ctx.closePath();
-        ctx.strokeStyle = ctx.fillStyle = entity.color;
-        fill ? ctx.fill() : ctx.stroke();
-        ctx.restore();
+        ctx.save()
+        ctx.beginPath()
+        ctx.ellipse(entity.x, entity.y, entity.radiusX, entity.radiusY, 0, 0, 2 * Math.PI)
+        ctx.closePath()
+        ctx.strokeStyle = ctx.fillStyle = entity.color
+        fill ? ctx.fill() : ctx.stroke()
+        ctx.restore()
     }
 }
