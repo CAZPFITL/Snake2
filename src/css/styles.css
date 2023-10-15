@@ -8,15 +8,12 @@
     z-index: 9999;
     width:200px;
     height:200px;
-    margin-bottom:20px;
-    bottom: 0;
-}
-
-#y-joystick {
+    top: calc(100vh - 200px);
     left: 0;
 }
 
 #x-joystick {
+    left: inherit;
     right: 0;
 }
 
@@ -35,8 +32,16 @@ body {
     position: relative;
 }
 
+#gameCanvas {
+    background: transparent;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
 #windowCanvas {
-    background: #FFFFFF00;
+    background: transparent;
     position: fixed;
     height: 100%;
     width: 100%;

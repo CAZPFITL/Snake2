@@ -48,17 +48,14 @@ class Snake extends SnakePhysics {
         if (this.speed > 0) {
             const velocityX = this.speed * Math.cos(this.angle)
             const velocityY = this.speed * Math.sin(this.angle)
-            const x = this.x + velocityX
-            const y = this.y + velocityY
+            this.x = this.x + velocityX
+            this.y = this.y + velocityY
 
-            this.x = x
-            this.y = y
-
-            this.head = [{x, y}, ...this.head.slice(0, this.headSize)]
+            this.head = [{x: this.x, y: this.y}, ...this.head.slice(0, this.headSize)]
 
             // Update body
-            if (this.app.tools.calculateDistance({x, y}, this.body[0]) > this.radius / 2) {
-                this.body = [{x, y}, ...this.body.slice(0, this.length)]
+            if (this.app.tools.calculateDistance(this, this.body[0]) > this.radius / 2) {
+                this.body = [{x: this.x, y: this.y}, ...this.body.slice(0, this.length)]
             }
         }
     }

@@ -14,6 +14,7 @@ class Level {
         height: 1000
     }
     border = 10
+    variable =1234234
 
     /**
      * Create a new `Level` instance within the specified application.
@@ -60,11 +61,17 @@ class Level {
         this.activeFood = new Food({ app: this.app, level: this })
     }
 
+    mimetodo(){
+        console.log(this.variable)
+        this.tiempo = 498764890567
+    }
+
     /**
      * Update the game level, including drawing, updating food, the snake, and the marker.
      */
     update = () => {
         this.draw()
+        this.mimetodo()
         this.activeFood.update()
         this.player.update()
         this.marker.update()
