@@ -65,7 +65,7 @@ class Snake extends Collisions {
      *
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
      */
-    draw = (ctx = this.app.gui.ctx) => {
+    draw = (ctx) => {
         const appGui = this.app.gui.get
         const lineWidth = this.radius * 2
         const lineCap = 'round'
@@ -85,10 +85,10 @@ class Snake extends Collisions {
             this.eat()
             this.checkBoundCollision()
             this.checkSelfCollision()
-            this.app.game.follow()
+            this.app.gui.viewport.follow(this.app.level.player)
+            this.app.level.map.follow(this.app.level.player)
             this.updateData()
         }
-        this.draw()
     }
 }
 

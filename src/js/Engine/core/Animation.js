@@ -19,8 +19,11 @@ class Animation {
      * The main animation loop function.
      */
     mainLoop = () => {
-        this.app.gui.viewport.begin(this.app.gui.ctx)
-        this.app.gui.viewport.begin(this.app.gui.windowCtx, false)
+        this.app.gui.viewport.begin({ ctx: this.app.gui.ctx })
+        this.app.gui.viewport.begin({
+            ctx: this.app.gui.windowCtx,
+            viewport: false
+        })
 
         // Loop through components in the game looper and call their update functions.
         this.app.looper.forEach(({ update }) => update?.(this.request));
@@ -29,7 +32,7 @@ class Animation {
         this.request = requestAnimationFrame(this.mainLoop);
 
         this.app.gui.viewport.end(this.app.gui.ctx)
-        this.app.gui.viewport.end(this.app.gui.windowCtx, false)
+        this.app.gui.viewport.end(this.app.gui.windowCtx)
     }
 }
 

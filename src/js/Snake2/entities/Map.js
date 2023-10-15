@@ -1,21 +1,15 @@
 import { Viewport } from './../dir/core.js'
 class Map {
-    constructor({ app, height = 100, width = 100, ...props }) {
+    constructor({ app, ctx }) {
         this.app = app
-        this.width = width
-        this.height = height
-        this.viewport = new Viewport({ app, fixedSize: { width, height } })
-        this.init()
-    }
-
-    init() {
-        console.log('new map created')
+        this.ctx = ctx
+        this.viewport = new Viewport({ app, fixedSize: { width: 200, height: 200 } })
     }
 
     update() {
-        this.viewport.begin(this.app.gui.mapCtx)
-        console.log('maploop')
-        this.viewport.end()
+        this.viewport.begin(this.ctx)
+        this.app.level.draw(this.ctx)
+        this.viewport.end(this.ctx)
     }
 }
 

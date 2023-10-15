@@ -22,9 +22,8 @@ class Viewport {
      *
      * @param {Object} app - The game application instance.
      */
-    constructor({ app, fixedSize = false}) {
+    constructor({ app}) {
         this.app = app
-        this.fixedSize = fixedSize
     }
 
     /**
@@ -65,10 +64,7 @@ class Viewport {
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context to use for calculations.
      */
     #updateViewportData = (ctx = this.app.gui.ctx) => {
-        this.fixedSize && console.log(this.fixedSize)
-        this.aspectRatio = this.fixedSize
-            ? this.fixedSize.width / this.fixedSize.width
-            : ctx.canvas.width / ctx.canvas.height
+        this.aspectRatio = ctx.canvas.width / ctx.canvas.height
         this.width = this.zoom * Math.tan(this.fieldOfView)
         this.height = this.width / this.aspectRatio
 
@@ -76,10 +72,7 @@ class Viewport {
         this.top = this.lookAt[1] - (this.height / 2.0)
         this.right = this.left + this.width
         this.bottom = this.top + this.height
-        this.scale = this.fixedSize ? [
-                this.fixedSize.width / this.width,
-                this.fixedSize.height / this.height
-            ] : [
+        this.scale = [
                 ctx.canvas.width / this.width,
                 ctx.canvas.height / this.height
             ]
@@ -100,10 +93,11 @@ class Viewport {
      *
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context to begin.
      * @param {boolean} [viewport=true] - Whether to update the viewport data.
+     * @param updateSize
      */
-    begin = (ctx = this.app.gui.ctx, viewport = true) => {
-        ctx.canvas.height = window.innerHeight
-        ctx.canvas.width = window.innerWidth
+    begin = ({ctx , viewport = true, keepSize = false}) => {
+        ctx.canvas.height = keepSize ? ctx.canvas.height : window.innerHeight
+        ctx.canvas.width = keepSize ? ctx.canvas.width : window.innerWidth
         viewport && this.#updateViewportData(ctx)
         viewport && this.#scaleAndTranslate(ctx)
         ctx.save()
@@ -114,8 +108,15 @@ class Viewport {
      *
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context to end.
      */
-    end = (ctx = this.app.gui.ctx) => {
+    end = (ctx) => {
         ctx.restore()
+    }
+
+    follow(target) {
+        this.moveTo([
+            target.x,
+            target.y
+        ])
     }
 }
 

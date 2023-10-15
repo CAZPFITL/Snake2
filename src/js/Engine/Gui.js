@@ -76,5 +76,6 @@ export default class Gui extends ScreenObjects {
 
         // CANVAS BACKGROUND
         (this.ctx.canvas.style.backgroundColor = this.decorations[this.app.state]?.stateBg);
+        (this.mapCtx.canvas.style.backgroundColor = this.decorations[this.app.state]?.stateBg);
     };
 }

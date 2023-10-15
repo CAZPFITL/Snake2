@@ -1,4 +1,4 @@
-import { Food, Snake, Timer, Marker, Map } from './../dir/core.js'
+import {Food, Snake, Timer, Marker, Map, Viewport} from './../dir/core.js'
 
 /**
  * Represents a game level containing food, a snake, and a marker.
@@ -12,7 +12,7 @@ class Level {
         width: 1000,
         height: 1000
     }
-    border = 10
+    border = 20
 
     /**
      * Create a new `Level` instance within the specified application.
@@ -22,7 +22,7 @@ class Level {
      */
     constructor({ app }) {
         this.app = app
-        this.init(app)
+        this.init()
     }
 
     /**
@@ -30,12 +30,13 @@ class Level {
      *
      * @param {App} app - The application instance.
      */
-    init = (app) => {
+    init = () => {
+        const { app } = this
         this.activeFood = new Food({ app, level: this })
         this.player = new Snake({ app })
         this.marker = new Marker({ app })
         this.timer = new Timer({ app })
-        this.map = new Map({ app })
+        this.map = new Viewport({ app })
     }
 
     /**
@@ -43,7 +44,7 @@ class Level {
      *
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
      */
-    draw(ctx = this.app.gui.ctx) {
+    draw(ctx) {
         this.app.gui.get.square({
             ctx,
             color: '#b7b7b7',
@@ -52,6 +53,9 @@ class Level {
             center: true,
             ...this.bounds
         })
+        this.activeFood.draw(ctx)
+        this.player.draw(ctx)
+        this.marker.draw()
     }
 
     /**
@@ -65,11 +69,18 @@ class Level {
      * Update the game level, including drawing, updating food, the snake, and the marker.
      */
     update = () => {
-        this.draw()
         this.activeFood.update()
         this.player.update()
         this.marker.update()
-        this.map.update()
+
+
+        this.map.begin({
+            ctx: this.app.gui.mapCtx,
+            updateSize: false
+
+        })
+        this.app.level.draw(this.app.gui.mapCtx)
+        this.map.end(this.app.gui.mapCtx)
     }
 }
 

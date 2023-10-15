@@ -83,7 +83,6 @@ class Marker {
         this.updatePosition()
         this.updateDistance()
         this.updateShape()
-        this.draw()
     }
 }
 

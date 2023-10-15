@@ -52,3 +52,14 @@ body {
     top: 0;
     left: 0;
 }
+
+#mapCanvas {
+    background: transparent;
+    border: 1px solid black;
+    position: fixed;
+    height: 200px;
+    width: 200px;
+    top: 20px;
+    right: 20px;
+    opacity: 0.6;
+}

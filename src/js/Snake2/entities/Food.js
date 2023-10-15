@@ -29,9 +29,9 @@ class Food {
      *
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
      */
-    draw(ctx = this.app.gui.ctx) {
+    draw(ctx) {
         this.app.gui.get.circle({
-            ctx: this.app.gui.ctx,
+            ctx,
             fill: this.color + '1)',
             ...this
         })
@@ -41,7 +41,7 @@ class Food {
      * Update the food item by redrawing it.
      */
     update = () => {
-        this.draw()
+        // TODO add eat logic here
     }
 }
 

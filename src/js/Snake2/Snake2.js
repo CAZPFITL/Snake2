@@ -33,18 +33,7 @@ export default class Snake2 {
     setPlayState() {
         this.app.setState('PLAY')
         this.app.level = new Level({ app: this.app })
-        this.app.looper.push(this.app.level)
         this.app.listeners.init()
-    }
-
-    /**
-     * Update the viewport to follow the snake's head position.
-     */
-    follow() {
-        this.app.gui.viewport.moveTo([
-            this.app.level.player.x,
-            this.app.level.player.y
-        ])
     }
 
     /**
@@ -52,6 +41,8 @@ export default class Snake2 {
      */
     update = () => {
         if (this.app.state === 'LOAD_GAME') this.setMenuState()
+        this.app?.level?.draw?.(this.app.gui.ctx)
+        this.app?.level?.update()
         this.screen.update()
     }
 }
