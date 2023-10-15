@@ -1,5 +1,6 @@
 import Food from './Food.js'
 import Snake from './SnakeObject/Snake.js'
+import Timer from "./Timer.js";
 import Marker from "./Marker.js";
 
 /**
@@ -15,9 +16,6 @@ class Level {
         height: 1000
     }
     border = 10
-    timerInterval = null
-    totalTime = 0
-
 
     /**
      * Create a new `Level` instance within the specified application.
@@ -35,11 +33,11 @@ class Level {
      *
      * @param {App} app - The application instance.
      */
-    init(app) {
+    init = (app) => {
         this.activeFood = new Food({ app, level: this })
-        this.player = new Snake({ app, id: 1 })
+        this.player = new Snake({ app })
         this.marker = new Marker({ app })
-        this.timer()
+        this.timer = new Timer({ app })
     }
 
     /**
@@ -61,33 +59,8 @@ class Level {
     /**
      * Generate a new food item within the game level.
      */
-    newFood() {
+    setFood() {
         this.activeFood = new Food({ app: this.app, level: this })
-    }
-
-    timer(){
-        let seconds = 0
-
-        if (this.timerInterval === null) {
-            this.timerInterval = setInterval(() => {
-                if (this.player.alive === true) {
-                    seconds++;
-
-                    const minutes = Math.floor(seconds / 60);
-                    const hours = Math.floor(minutes / 60);
-                    const SecondsLeft = seconds % 60;
-
-                    const Hours = hours.toString().padStart(2, '0');
-                    const Minutes = minutes.toString().padStart(2, '0');
-                    const Seconds = SecondsLeft.toString().padStart(2, '0');
-
-                    this.totalTime = `${Hours}:${Minutes}:${Seconds}`;
-                } else {
-                    clearInterval(this.timerInterval);
-                    this.timerInterval = null;
-                }
-            }, 1000);
-        }
     }
 
     /**

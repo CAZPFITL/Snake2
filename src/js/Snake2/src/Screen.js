@@ -1,4 +1,4 @@
-import {BUTTONS} from './../env.js'
+import { BUTTONS } from '../env.js'
 import EventsMethods from './EventsMethods.js'
 
 /**
@@ -103,8 +103,8 @@ export default class Screen extends EventsMethods {
                     props: {
                         ctx: this.app.gui.windowCtx,
                         font: '40px Mouse',
-                        text: 'Time: ' + this.app?.level?.totalTime,
-                        x: window.innerWidth / 2 - (String(this.app?.level?.player?.length).length * 10),
+                        text: this.app?.level?.timer?.print('h:m:s'),
+                        x: window.innerWidth / 2,
                         y: window.innerHeight - 900,
                         color: '#ffffff'
                     }

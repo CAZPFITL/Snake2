@@ -16,9 +16,10 @@ export default class Camera {
      *
      * @param {Object} app - The game application instance.
      */
-    constructor(app) {
+    constructor(app, props) {
         this.app = app
         this.init()
+        this.fixedSize = this.fixedSize
     }
 
     /**
@@ -80,7 +81,7 @@ export default class Camera {
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context to use for calculations.
      */
     #updateViewportData = (ctx = this.app.gui.ctx) => {
-        this.aspectRatio = ctx.canvas.width / ctx.canvas.height
+        this.aspectRatio = this.fixedSize ?? ctx.canvas.width / ctx.canvas.height
         this.viewport.width = this.zoom * Math.tan(this.fieldOfView)
         this.viewport.height = this.viewport.width / this.aspectRatio
 

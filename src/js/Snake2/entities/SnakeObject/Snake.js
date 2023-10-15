@@ -37,7 +37,7 @@ class Snake extends SnakePhysics {
 
         if (distanceToFood < minimumDistanceToEat) {
             this.length += level.activeFood.value
-            level.newFood()
+            level.setFood()
         }
     }
 
