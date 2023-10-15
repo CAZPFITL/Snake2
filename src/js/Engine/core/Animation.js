@@ -18,14 +18,18 @@ class Animation {
     /**
      * The main animation loop function.
      */
-    loop = () => {
-        this.app.gui.viewport.loop(() => {
-            // Loop through components in the game looper and call their update functions.
-            this.app.looper.forEach(({ update }) => update?.(this.request));
+    mainLoop = () => {
+        this.app.gui.viewport.begin(this.app.gui.ctx)
+        this.app.gui.viewport.begin(this.app.gui.windowCtx, false)
 
-            // Request the next animation frame and continue the loop.
-            this.request = requestAnimationFrame(this.loop);
-        });
+        // Loop through components in the game looper and call their update functions.
+        this.app.looper.forEach(({ update }) => update?.(this.request));
+
+        // Request the next animation frame and continue the loop.
+        this.request = requestAnimationFrame(this.mainLoop);
+
+        this.app.gui.viewport.end(this.app.gui.ctx)
+        this.app.gui.viewport.end(this.app.gui.windowCtx, false)
     }
 }
 

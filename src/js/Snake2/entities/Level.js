@@ -69,6 +69,7 @@ class Level {
         this.activeFood.update()
         this.player.update()
         this.marker.update()
+        this.map.update()
     }
 }
 

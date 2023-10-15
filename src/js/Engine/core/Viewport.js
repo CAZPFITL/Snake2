@@ -22,9 +22,9 @@ class Viewport {
      *
      * @param {Object} app - The game application instance.
      */
-    constructor(app, props) {
+    constructor({ app, fixedSize = false}) {
         this.app = app
-        this.fixedSize = this.fixedSize
+        this.fixedSize = fixedSize
     }
 
     /**
@@ -65,7 +65,10 @@ class Viewport {
      * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context to use for calculations.
      */
     #updateViewportData = (ctx = this.app.gui.ctx) => {
-        this.aspectRatio = this.fixedSize ?? ctx.canvas.width / ctx.canvas.height
+        this.fixedSize && console.log(this.fixedSize)
+        this.aspectRatio = this.fixedSize
+            ? this.fixedSize.width / this.fixedSize.width
+            : ctx.canvas.width / ctx.canvas.height
         this.width = this.zoom * Math.tan(this.fieldOfView)
         this.height = this.width / this.aspectRatio
 
@@ -73,10 +76,13 @@ class Viewport {
         this.top = this.lookAt[1] - (this.height / 2.0)
         this.right = this.left + this.width
         this.bottom = this.top + this.height
-        this.scale = [
-            ctx.canvas.width / this.width,
-            ctx.canvas.height / this.height
-        ]
+        this.scale = this.fixedSize ? [
+                this.fixedSize.width / this.width,
+                this.fixedSize.height / this.height
+            ] : [
+                ctx.canvas.width / this.width,
+                ctx.canvas.height / this.height
+            ]
     }
 
     /**
@@ -99,8 +105,8 @@ class Viewport {
         ctx.canvas.height = window.innerHeight
         ctx.canvas.width = window.innerWidth
         viewport && this.#updateViewportData(ctx)
-        ctx.save()
         viewport && this.#scaleAndTranslate(ctx)
+        ctx.save()
     }
 
     /**
@@ -110,19 +116,6 @@ class Viewport {
      */
     end = (ctx = this.app.gui.ctx) => {
         ctx.restore()
-    }
-
-    /**
-     * Execute a rendering loop within the viewport context.
-     *
-     * @param {function} handler - The rendering loop function to execute.
-     */
-    loop(handler) {
-        this.begin(this.app.gui.ctx)
-        this.begin(this.app.gui.windowCtx, false)
-        handler()
-        this.end(this.app.gui.ctx)
-        this.end(this.app.gui.windowCtx, false)
     }
 }
 

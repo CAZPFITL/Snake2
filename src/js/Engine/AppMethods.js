@@ -35,6 +35,6 @@ export default class AppMethods extends StateManager {
      */
     init = () => {
         this.setState('LOAD_GAME');
-        this.animation.loop();
+        this.animation.mainLoop();
     }
 }
