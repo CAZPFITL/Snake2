@@ -1,5 +1,5 @@
-import ScreenObjects from "./ScreenObjects.js";
-import Camera from './Camera.js';
+import ScreenObjects from './core/ScreenObjects.js'
+import Viewport from './core/Viewport.js'
 
 /**
  * The Gui class handles the graphical user interface for the game.
@@ -8,7 +8,7 @@ export default class Gui extends ScreenObjects {
     app;
     ctx;
     windowCtx;
-    camera;
+    viewport;
     get = Gui;
     decorations = {};
     buttonsCollection = {};
@@ -26,7 +26,7 @@ export default class Gui extends ScreenObjects {
         this.app = app;
         this.ctx = Gui.createCanvas('gameCanvas');
         this.windowCtx = Gui.createCanvas('windowCanvas');
-        this.camera = new Camera(app);
+        this.viewport = new Viewport(app);
         app.gui = this;
     }
 
@@ -41,7 +41,7 @@ export default class Gui extends ScreenObjects {
         app.gui.get.checkHoverCollection({
             collection: this.hoverCollection,
             event,
-            viewport: this.camera.viewport,
+            viewport: this.viewport,
             isHover,
             isOut,
             caller: this.elementHovered,

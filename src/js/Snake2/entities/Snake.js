@@ -1,9 +1,10 @@
-import SnakePhysics from './SnakePhysics.js'
-import Tools from '../../../Engine/core/Tools.js'
+import { Collisions } from './../dir/game.js'
+import { Tools } from './../dir/engine.js'
+
 /**
  * Represents a snake entity in the game.
  */
-class Snake extends SnakePhysics {
+class Snake extends Collisions {
     color = `rgb(${Tools.random(0,255,true)},${Tools.random(0,255,true)},${Tools.random(0,255,true)})`
     id = 0
     x = 0
@@ -86,7 +87,7 @@ class Snake extends SnakePhysics {
             this.checkBoundCollision()
             this.checkSelfCollision()
             this.app.game.follow()
-            this.updatePhysics()
+            this.updateData()
         }
         this.draw()
     }

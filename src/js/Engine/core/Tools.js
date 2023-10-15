@@ -1,7 +1,7 @@
 /**
  * A utility class for common mathematical and geometric operations.
  */
-export default class Tools {
+class Tools {
     /**
      * Linear interpolation between two values.
      *
@@ -174,3 +174,5 @@ export default class Tools {
         return false;
     }
 }
+
+export default Tools

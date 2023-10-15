@@ -1,7 +1,7 @@
 /**
  * Represents a class for managing the animation loop of the game application.
  */
-export default class Animation {
+class Animation {
     app; // Reference to the game application.
     request; // A reference to the animation frame request.
 
@@ -30,7 +30,7 @@ export default class Animation {
      * The main animation loop function.
      */
     loop = () => {
-        this.app.gui.camera.loop(() => {
+        this.app.gui.viewport.loop(() => {
             // Loop through components in the game looper and call their update functions.
             this.app.looper.forEach(({ update }) => update?.(this.request));
 
@@ -39,3 +39,5 @@ export default class Animation {
         });
     }
 }
+
+export default Animation

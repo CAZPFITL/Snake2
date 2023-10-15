@@ -1,4 +1,4 @@
-import Screen from './src/Screen.js'
+import Screen from './core/Screen.js'
 import Level from './entities/Level.js'
 
 /**
@@ -38,10 +38,10 @@ export default class Snake2 {
     }
 
     /**
-     * Update the camera to follow the snake's head position.
+     * Update the viewport to follow the snake's head position.
      */
     follow() {
-        this.app.gui.camera.moveTo([
+        this.app.gui.viewport.moveTo([
             this.app.level.player.x,
             this.app.level.player.y
         ])

@@ -1,7 +1,7 @@
 /**
  * Manages the current state of the application.
  */
-export default class StateManager {
+class StateManager {
     /**
      * The current state of the application.
      */
@@ -14,3 +14,5 @@ export default class StateManager {
      */
     setState = (state) => this.state = state;
 }
+
+export default StateManager

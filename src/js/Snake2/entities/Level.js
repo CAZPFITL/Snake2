@@ -1,7 +1,4 @@
-import Food from './Food.js'
-import Snake from './SnakeObject/Snake.js'
-import Timer from "./Timer.js";
-import Marker from "./Marker.js";
+import { Food, Snake, Timer, Marker, Map } from './../dir/entities.js'
 
 /**
  * Represents a game level containing food, a snake, and a marker.
@@ -38,6 +35,7 @@ class Level {
         this.player = new Snake({ app })
         this.marker = new Marker({ app })
         this.timer = new Timer({ app })
+        this.map = new Map({ app })
     }
 
     /**

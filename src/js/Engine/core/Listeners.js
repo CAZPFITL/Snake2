@@ -1,7 +1,7 @@
 /**
  * Manages event listeners for the application.
  */
-export default class Listeners {
+class Listeners {
     app; // Reference to the app
     listeners; // Stores event listeners
 
@@ -44,3 +44,5 @@ export default class Listeners {
         return this; // Return this instance for method chaining.
     }
 }
+
+export default Listeners

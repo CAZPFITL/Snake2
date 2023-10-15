@@ -1,6 +1,7 @@
-import Controls from './../../src/Controls.js'
+import { Controls } from './../dir/game.js'
 
-class SnakePhysics {
+
+class Collisions {
     x
     y
     app
@@ -82,10 +83,6 @@ class SnakePhysics {
             this.speed = this.speedParameters.min;
         }
     }
-
-    updatePhysics = () => {
-        this.updateData()
-    }
 }
 
-export default  SnakePhysics
+export default  Collisions

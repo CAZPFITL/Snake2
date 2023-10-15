@@ -3,7 +3,7 @@ import ScreenMethods from './ScreenMethods.js'
 /**
  * A collection of static methods for drawing various screen objects and shapes.
  */
-export default class ScreenObjects extends ScreenMethods {
+class ScreenObjects extends ScreenMethods {
     constructor() {
         super()
     }
@@ -277,3 +277,5 @@ export default class ScreenObjects extends ScreenMethods {
         ctx.restore()
     }
 }
+
+export default ScreenObjects

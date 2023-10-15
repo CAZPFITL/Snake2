@@ -1,7 +1,7 @@
 /**
  * A utility class containing static methods for common screen-related operations.
  */
-export default class ScreenMethods {
+class ScreenMethods {
     /**
      * Create and return a canvas context for the specified HTML canvas element.
      *
@@ -111,3 +111,5 @@ export default class ScreenMethods {
         y: e.clientY / viewport.scale[1] + viewport.top
     })
 }
+
+export default ScreenMethods

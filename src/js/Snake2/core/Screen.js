@@ -1,5 +1,5 @@
-import { BUTTONS } from '../env.js'
-import EventsMethods from './EventsMethods.js'
+import { BUTTONS } from '../decorations.js'
+import { EventsMethods } from './../dir/game.js'
 
 /**
  * Represents a screen in the application, handling events and rendering components.
@@ -8,7 +8,7 @@ export default class Screen extends EventsMethods {
     constructor(app) {
         super(app)
         this.app = app
-        app.gui.camera
+        app.gui.viewport
             .setProp('maxZoom', 1000)
             .setProp('minZoom', 500)
             .setProp('zoom', 500)

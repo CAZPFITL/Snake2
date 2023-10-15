@@ -1,4 +1,4 @@
-import Tools from '../../Engine/core/Tools.js'
+import { Tools } from './../dir/engine.js'
 
 /**
  * Represents a food item in the game.

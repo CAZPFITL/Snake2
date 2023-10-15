@@ -1,4 +1,4 @@
-import AppMethods from './core/AppMethods.js'
+import AppMethods from './AppMethods.js'
 
 class App extends AppMethods {
     /**

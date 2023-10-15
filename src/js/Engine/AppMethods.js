@@ -1,8 +1,8 @@
-import Gui from '../gui/Gui.js';
-import Animation from './Animation.js';
-import Listeners from './Listeners.js';
-import StateManager from './StateManager.js';
-import Tools from './Tools.js';
+import Gui from './Gui.js';
+import Animation from './core/Animation.js';
+import Listeners from './core/Listeners.js';
+import StateManager from './core/StateManager.js';
+import Tools from './core/Tools.js';
 
 /**
  * Represents a base class for managing a game application.

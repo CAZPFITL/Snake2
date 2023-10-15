@@ -11,7 +11,7 @@ class EventsMethods {
     }
 
     /**
-     * Handle the mouse wheel event to zoom or pan the camera.
+     * Handle the mouse wheel event to zoom or pan the viewport.
      *
      * @param {Event} event - The mouse wheel event.
      */
@@ -19,28 +19,28 @@ class EventsMethods {
         {
             event.preventDefault()
             event.stopPropagation()
-            const delta = Math.max(-this.app.gui.camera.rate, Math.min(this.app.gui.camera.rate, event.deltaY))
+            const delta = Math.max(-this.app.gui.viewport.rate, Math.min(this.app.gui.viewport.rate, event.deltaY))
 
             if (event.ctrlKey) {
-                let zoomLevel = this.app.gui.camera.zoom + Math.floor(delta)
+                let zoomLevel = this.app.gui.viewport.zoom + Math.floor(delta)
 
-                this.app.gui.camera.zoomTo(
-                    (zoomLevel <= this.app.gui.camera.minZoom) ?
-                        this.app.gui.camera.minZoom :
-                        (zoomLevel >= this.app.gui.camera.maxZoom) ?
-                            this.app.gui.camera.maxZoom :
+                this.app.gui.viewport.zoomTo(
+                    (zoomLevel <= this.app.gui.viewport.minZoom) ?
+                        this.app.gui.viewport.minZoom :
+                        (zoomLevel >= this.app.gui.viewport.maxZoom) ?
+                            this.app.gui.viewport.maxZoom :
                             zoomLevel
                 )
             } else {
                 if (event.shiftKey) {
-                    this.app.gui.camera.moveTo([
-                        this.app.gui.camera.lookAt[0] + Math.floor(delta),
-                        this.app.gui.camera.lookAt[1]
+                    this.app.gui.viewport.moveTo([
+                        this.app.gui.viewport.lookAt[0] + Math.floor(delta),
+                        this.app.gui.viewport.lookAt[1]
                     ])
                 } else {
-                    this.app.gui.camera.moveTo([
-                        this.app.gui.camera.lookAt[0],
-                        this.app.gui.camera.lookAt[1] + Math.floor(delta),
+                    this.app.gui.viewport.moveTo([
+                        this.app.gui.viewport.lookAt[0],
+                        this.app.gui.viewport.lookAt[1] + Math.floor(delta),
                     ])
                 }
             }
