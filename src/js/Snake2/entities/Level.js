@@ -15,7 +15,9 @@ class Level {
         height: 1000
     }
     border = 10
-    variable =1234234
+    timerInterval = null
+    totalTime = 0
+
 
     /**
      * Create a new `Level` instance within the specified application.
@@ -26,8 +28,6 @@ class Level {
     constructor({ app }) {
         this.app = app
         this.init(app)
-        this.timerInterval = null;
-        this.totalTime = 0;
     }
 
     /**
@@ -39,6 +39,7 @@ class Level {
         this.activeFood = new Food({ app, level: this })
         this.player = new Snake({ app, id: 1 })
         this.marker = new Marker({ app })
+        this.timer()
     }
 
     /**
@@ -55,7 +56,6 @@ class Level {
             center: true,
             ...this.bounds
         })
-        this.timer()
     }
 
     /**
