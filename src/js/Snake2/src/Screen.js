@@ -98,6 +98,17 @@ export default class Screen extends EventsMethods {
                         cap: this.app?.level?.player?.speedParameters?.max * 80,
                         fill:  this.app?.level?.player?.speed * 80
                     }
+                },
+                timer: {
+                    type: 'text',
+                    props: {
+                        ctx: this.app.gui.windowCtx,
+                        font: '40px Mouse',
+                        text: 'Time: ' + this.app?.level?.totalTime,
+                        x: window.innerWidth / 2 - (String(this.app?.level?.player?.length).length * 10),
+                        y: window.innerHeight - 900,
+                        color: '#ffffff'
+                    }
                 }
             }
         }

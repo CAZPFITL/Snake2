@@ -26,6 +26,8 @@ class Level {
     constructor({ app }) {
         this.app = app
         this.init(app)
+        this.timerInterval = null;
+        this.totalTime = 0;
     }
 
     /**
@@ -53,6 +55,7 @@ class Level {
             center: true,
             ...this.bounds
         })
+        this.timer()
     }
 
     /**
@@ -60,6 +63,31 @@ class Level {
      */
     newFood() {
         this.activeFood = new Food({ app: this.app, level: this })
+    }
+
+    timer(){
+        let seconds = 0
+
+        if (this.timerInterval === null) {
+            this.timerInterval = setInterval(() => {
+                if (this.player.alive === true) {
+                    seconds++;
+
+                    const minutes = Math.floor(seconds / 60);
+                    const hours = Math.floor(minutes / 60);
+                    const SecondsLeft = seconds % 60;
+
+                    const Hours = hours.toString().padStart(2, '0');
+                    const Minutes = minutes.toString().padStart(2, '0');
+                    const Seconds = SecondsLeft.toString().padStart(2, '0');
+
+                    this.totalTime = `${Hours}:${Minutes}:${Seconds}`;
+                } else {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
+                }
+            }, 1000);
+        }
     }
 
     /**
