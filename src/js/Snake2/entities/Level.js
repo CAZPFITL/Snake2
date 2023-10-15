@@ -1,4 +1,4 @@
-import { Food, Snake, Timer, Marker, Map } from './../dir/entities.js'
+import { Food, Snake, Timer, Marker, Map } from './../dir/core.js'
 
 /**
  * Represents a game level containing food, a snake, and a marker.

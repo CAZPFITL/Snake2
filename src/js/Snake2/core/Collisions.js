@@ -1,5 +1,4 @@
-import { Controls } from './../dir/game.js'
-
+import { Controls } from './../dir/core.js'
 
 class Collisions {
     x

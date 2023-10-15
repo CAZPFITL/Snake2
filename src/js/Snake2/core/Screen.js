@@ -1,5 +1,5 @@
-import { BUTTONS } from '../decorations.js'
-import { EventsMethods } from './../dir/game.js'
+import { BUTTONS, EventsMethods } from './../dir/core.js'
+
 
 /**
  * Represents a screen in the application, handling events and rendering components.

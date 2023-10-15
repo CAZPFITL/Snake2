@@ -1,5 +1,4 @@
-import { Collisions } from './../dir/game.js'
-import { Tools } from './../dir/engine.js'
+import { Collisions, Tools } from './../dir/core.js'
 
 /**
  * Represents a snake entity in the game.

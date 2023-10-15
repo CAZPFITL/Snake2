@@ -1,5 +1,5 @@
-import Screen from './core/Screen.js'
-import Level from './entities/Level.js'
+import { Screen, Level } from './dir/core.js'
+
 
 /**
  * Represents the main class for the Snake2 game.
