@@ -16,24 +16,25 @@ export default class AppMethods extends StateManager {
     /**
      * Initializes the AppMethods class.
      *
-     * @param {Class} Game - The main game class to be instantiated.
+     * @param {Function} Game - The main game class to be instantiated.
      */
     constructor(Game) {
         super(); // Initialize the state manager.
-        new Animation(this); // Create an instance of the Animation class.
-        new Listeners(this); // Create an instance of the Listeners class.
+        this.animation = new Animation(this); // Create an instance of the Animation class.
+        this.listeners = new Listeners(this); // Create an instance of the Listeners class.
 
         // Initialize the looper array with Gui and Game components.
         this.looper = [
             new Gui(this), // Create an instance of the Gui class.
-            new Game(this), // Create an instance of the Game class.
+            new Game(this) // Create an instance of the Game class.
         ];
     }
 
     /**
      * Initializes the game application.
      */
-    init() {
-        this.animation.start('LOAD_GAME'); // Start the animation with the initial state.
+    init = () => {
+        this.setState('LOAD_GAME');
+        this.animation.loop();
     }
 }

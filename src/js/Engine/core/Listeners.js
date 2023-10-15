@@ -13,7 +13,6 @@ class Listeners {
     constructor(app) {
         this.app = app; // Reference to the main application
         this.listeners = {}; // Stores event listeners
-        app.listeners = this; // Assign this instance to the app object.
     }
 
     /**

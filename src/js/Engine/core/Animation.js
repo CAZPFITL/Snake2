@@ -12,18 +12,7 @@ class Animation {
      */
     constructor(app) {
         this.app = app;
-        app.animation = this; // Register the animation object with the game application.
         return this;
-    }
-
-    /**
-     * Starts the animation loop with the initial state.
-     *
-     * @param {string} firstState - The initial state to start the animation with.
-     */
-    start(firstState) {
-        this.loop(); // Start the animation loop.
-        this.app.setState(firstState); // Set the initial state of the application.
     }
 
     /**

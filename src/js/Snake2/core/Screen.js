@@ -39,7 +39,7 @@ export default class Screen extends EventsMethods {
      */
     update(){
         this.app.gui.decorations = {
-            LOAD_GAME: {
+            LOAD_ENGINE: {
                 stateBg: '#000000'
             },
             MENU_MAIN: {
@@ -114,7 +114,7 @@ export default class Screen extends EventsMethods {
                     props: {
                         ctx: this.app.gui.windowCtx,
                         font: '70px Mouse',
-                        text: this.app?.level?.player?.alive === true ? '' : 'YOU DIE!',
+                        text: this.app?.level?.timer.value > 0 && !this.app?.level?.player?.alive ? 'GAME OVER' : '',
                         x: window.innerWidth / 2 - (String(this.app?.level?.player?.length).length * 10),
                         y: window.innerHeight - 450,
                         color: '#ffffff'

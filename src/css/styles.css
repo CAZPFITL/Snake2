@@ -3,6 +3,10 @@
     src: local("Mouse"), url("./font.woff") format("woff");
 }
 
+.dir {
+    display: none;
+}
+
 .joystick {
     position: absolute;
     z-index: 9999;

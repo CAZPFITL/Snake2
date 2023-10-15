@@ -7,7 +7,7 @@ class App extends AppMethods {
      * @param {function} Game - The game class to be associated with the application.
      */
     constructor(Game) {
-        super(Game, false);
+        super(Game);
         window.app = this;
     }
 }
