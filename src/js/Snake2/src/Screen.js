@@ -38,6 +38,7 @@ export default class Screen extends EventsMethods {
      * Update the screen components, including buttons, text, and other decorations.
      */
     update(){
+        const scoreText = `score: ${this.app?.level?.player?.length}`
         this.app.gui.decorations = {
             LOAD_GAME: {
                 stateBg: '#000000'
@@ -72,10 +73,10 @@ export default class Screen extends EventsMethods {
                     type: 'text',
                     props: {
                         ctx: this.app.gui.windowCtx,
-                        font: '40px Mouse',
-                        text: this.app?.level?.player?.length,
-                        x: window.innerWidth / 2 - (String(this.app?.level?.player?.length).length * 10),
-                        y: window.innerHeight - 20,
+                        font: '30px Mouse',
+                        text: scoreText,
+                        x: window.innerWidth / 2 + 100,
+                        y: window.innerHeight - 10,
                         color: '#ffffff'
                     }
                 }

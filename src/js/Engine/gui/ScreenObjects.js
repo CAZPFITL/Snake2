@@ -180,8 +180,8 @@ export default class ScreenObjects extends ScreenMethods {
         ctx.fillRect(x, y, cap, height)
 
         if (stroke) {
-        ctx.strokeStyle = stroke
-        ctx.strokeRect(x, y, cap, height)
+            ctx.strokeStyle = stroke
+            ctx.strokeRect(x, y, cap, height)
         }
 
         ctx.fillStyle = fillColor === 'green-red'

@@ -6,6 +6,7 @@ import Marker from "./Marker.js";
  * Represents a game level containing food, a snake, and a marker.
  */
 class Level {
+    app
     activeFood
     bounds = {
         x: -500,

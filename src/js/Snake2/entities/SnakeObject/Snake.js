@@ -1,4 +1,5 @@
 import SnakePhysics from './SnakePhysics.js'
+import Speedometer from './../Speedometer.js'
 import Tools from '../../../Engine/core/Tools.js'
 /**
  * Represents a snake entity in the game.
@@ -25,6 +26,7 @@ class Snake extends SnakePhysics {
         super()
         this.app = app
         this.id = id
+        this.speedometer = new Speedometer({ app })
     }
 
     /**
@@ -87,6 +89,7 @@ class Snake extends SnakePhysics {
             this.checkSelfCollision()
             this.app.game.follow()
             this.updatePhysics()
+            this.speedometer.update()
         }
         this.draw()
     }
