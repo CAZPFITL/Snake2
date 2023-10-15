@@ -9,6 +9,10 @@ class SnakePhysics {
     radius
     acceleration = 0
     turnSpeed = 0
+    speedParameters= {
+        max: 2,
+        min: 0.6
+    }
     speed = 1
     angle = 0
     controls = new Controls(app)
@@ -65,6 +69,18 @@ class SnakePhysics {
         this.speed += this.acceleration
         this.turnSpeed = this.controls.input.x / this.controls.sensibility
         this.acceleration = this.controls.input.y / this.controls.sensibility
+
+        if (this.controls.input.y === 0) {
+            this.speed = 1;
+        } else {
+            this.acceleration = this.controls.input.y / this.controls.sensibility;
+        }
+
+        if (this.speed > this.speedParameters.max) {
+            this.speed = this.speedParameters.max;
+        } else if (this.speed < this.speedParameters.min) {
+            this.speed = this.speedParameters.min;
+        }
     }
 
     updatePhysics = () => {
