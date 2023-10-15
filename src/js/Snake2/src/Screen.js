@@ -75,9 +75,24 @@ export default class Screen extends EventsMethods {
                         ctx: this.app.gui.windowCtx,
                         font: '30px Mouse',
                         text: scoreText,
-                        x: window.innerWidth / 2 + 100,
+                        x: window.innerWidth / 1.9,
                         y: window.innerHeight - 10,
                         color: '#ffffff'
+                    }
+                },
+                speedBar: {
+                    type: 'bar',
+                    props: {
+                        ctx: this.app.gui.windowCtx,
+                        x: window.innerWidth / 4,
+                        y: window.innerHeight - 20,
+                        text: 'speed',
+                        height: 10,
+                        fillColor: 'green',
+                        stroke: 'black',
+                        barColor: 'white',
+                        cap: this.app?.level?.player?.speedParameters?.max * 80,
+                        fill:  this.app?.level?.player?.speed * 80
                     }
                 }
             }
