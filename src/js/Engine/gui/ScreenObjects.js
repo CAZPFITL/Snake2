@@ -170,7 +170,8 @@ export default class ScreenObjects extends ScreenMethods {
        height = 10,
        fillColor,
        barColor = 'transparent',
-       stroke
+       stroke,
+       textColor = '#000000'
    }, negative = false) {
         ctx.save()
         const normalizedProgress = fill / (cap / 255)
@@ -192,7 +193,7 @@ export default class ScreenObjects extends ScreenMethods {
 
         ctx.fillRect(x, y, progress, height)
 
-        text && this.text({ctx, font: '12px Mouse', color: '#000', text, x, y: y - height})
+        text && this.text({ctx, font: '12px Mouse', color: textColor, text, x, y: y - height})
         ctx.restore()
     }
 
