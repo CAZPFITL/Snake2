@@ -108,6 +108,17 @@ export default class Screen extends EventsMethods {
                         y: window.innerHeight - 900,
                         color: '#ffffff'
                     }
+                },
+                die: {
+                    type: 'text',
+                    props: {
+                        ctx: this.app.gui.windowCtx,
+                        font: '70px Mouse',
+                        text: this.app?.level?.player?.alive === true ? '' : 'YOU DIE!',
+                        x: window.innerWidth / 2 - (String(this.app?.level?.player?.length).length * 10),
+                        y: window.innerHeight - 450,
+                        color: '#ffffff'
+                    }
                 }
             }
         }
