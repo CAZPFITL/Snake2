@@ -10,6 +10,7 @@ class Snake extends SnakePhysics {
     y = 0
     head = [{x: 0, y: 0}]
     body = [{x: 0, y: 0}]
+    headSize = 5
     radius = 4
     length = 100
     alive = true
@@ -53,13 +54,11 @@ class Snake extends SnakePhysics {
             this.x = x
             this.y = y
 
+            this.head = [{x, y}, ...this.head.slice(0, this.headSize)]
+
             // Update body
             if (this.app.tools.calculateDistance({x, y}, this.body[0]) > this.radius / 2) {
-                this.body = [{x, y}, ...this.body]
-
-                if (this.body.length > this.length) {
-                    this.body.pop()
-                }
+                this.body = [{x, y}, ...this.body.slice(0, this.length)]
             }
         }
     }
@@ -76,7 +75,7 @@ class Snake extends SnakePhysics {
         const scale = 1
         const opts = { ctx, width: lineWidth, lineCap, scale }
         appGui.path({ collection: this.body, color: this.color, ...opts })
-        // appGui.path({ collection: [this.head], color: '#000000', ...opts })
+        appGui.path({ collection: this.head, color: '#000000', ...opts })
 
     }
 

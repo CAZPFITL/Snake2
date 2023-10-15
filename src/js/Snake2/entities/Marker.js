@@ -14,8 +14,8 @@ class Marker {
      * Update the angle of the marker based on the position of the active food item and the snake's head.
      */
     updateAngle() {
-        const dx = this.app.level.activeFood.x - this.app.level.player.head.x;
-        const dy = this.app.level.activeFood.y - this.app.level.player.head.y;
+        const dx = this.app.level.activeFood.x - this.app.level.player.x;
+        const dy = this.app.level.activeFood.y - this.app.level.player.y;
         this.angle = Math.atan2(dy, dx);
         this.angle %= 2 * Math.PI;
     }
@@ -24,7 +24,7 @@ class Marker {
      * Update the distance from the marker to the active food item and determine if it should be displayed.
      */
     updateDistance() {
-        this.distance = this.app.tools.calculateDistance(this.app.level.player.head, this.app.level.activeFood)
+        this.distance = this.app.tools.calculateDistance(this.app.level.player, this.app.level.activeFood)
         this.display = this.distance > 30
     }
 
