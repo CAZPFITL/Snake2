@@ -5,11 +5,6 @@ class Listeners {
     app; // Reference to the app
     listeners; // Stores event listeners
 
-    /**
-     * Initializes the Listeners class.
-     *
-     * @param {object} app - The main application object.
-     */
     constructor(app) {
         this.app = app; // Reference to the main application
         this.listeners = {}; // Stores event listeners

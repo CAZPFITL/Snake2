@@ -14,13 +14,7 @@ class Snake extends Collisions {
     radius = 4
     length = 100
     alive = true
-    /**
-     * Create a new `Snake` instance associated with the provided application and optional ID.
-     *
-     * @param {Object} options - An object containing game-related options.
-     * @param {App} options.app - The application instance.
-     * @param {number} [options.id=0] - The unique identifier for the snake.
-     */
+
     constructor({ app, id = 0 }) {
         super()
         this.app = app
@@ -62,33 +56,31 @@ class Snake extends Collisions {
 
     /**
      * Draw the snake on the canvas context.
-     *
-     * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
      */
     draw = (ctx) => {
         const appGui = this.app.gui.get
-        const lineWidth = this.radius * 2
-        const lineCap = 'round'
-        const scale = 1
-        const opts = { ctx, width: lineWidth, lineCap, scale }
+        const opts = { ctx, width: this.radius * 2, lineCap: 'round', scale: 1 }
         appGui.path({ collection: this.body, color: this.color, ...opts })
         appGui.path({ collection: this.head, color: '#000000', ...opts })
 
     }
 
     /**
-     * Update the snake by executing speed, position, angle, body length, bound collision, and self-collision checks.
+     * Update the snake
      */
     update = () => {
         const { gui, level } = this.app
         if (this.alive) {
             this.move()
             this.eat()
+
             this.checkBoundCollision()
             this.checkSelfCollision()
+            this.updateData()
+
             gui.viewport.follow(level.player)
             level.mapViewport.follow(level.player)
-            this.updateData()
+
         }
     }
 }

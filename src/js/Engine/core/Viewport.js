@@ -17,11 +17,6 @@ class Viewport {
     zoom = 1000
     app
 
-    /**
-     * Create a new Camera instance.
-     *
-     * @param {Object} app - The game application instance.
-     */
     constructor({ app}) {
         this.app = app
     }

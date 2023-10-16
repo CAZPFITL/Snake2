@@ -8,11 +8,6 @@ export default class Snake2 {
     app
     screen
 
-    /**
-     * Create a new `Snake2` instance associated with the provided application.
-     *
-     * @param {App} app - The application instance.
-     */
     constructor(app) {
         this.app = app
         app.game = this

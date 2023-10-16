@@ -5,8 +5,7 @@ class Animation {
     app; // Reference to the game application.
     request; // A reference to the animation frame request.
 
-    constructor(app) {
-        this.app = app;
+    constructor(app) {this.app = app;
         return this;
     }
 
