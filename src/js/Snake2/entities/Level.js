@@ -14,12 +14,6 @@ class Level {
     }
     border = 20
 
-    /**
-     * Create a new `Level` instance within the specified application.
-     *
-     * @param {Object} options - An object containing game-related options.
-     * @param {App} options.app - The application instance.
-     */
     constructor({ app }) {
         this.app = app
         this.init()
@@ -27,8 +21,6 @@ class Level {
 
     /**
      * Initialize the game level by creating food, a snake, and a marker.
-     *
-     * @param {App} app - The application instance.
      */
     init = () => {
         const { app } = this
@@ -41,8 +33,6 @@ class Level {
 
     /**
      * Draw the game level on the specified canvas context or the default GUI context.
-     *
-     * @param {CanvasRenderingContext2D} [ctx=this.app.gui.ctx] - The canvas rendering context.
      */
     draw(ctx) {
         this.app.gui.get.square({
@@ -53,9 +43,6 @@ class Level {
             center: true,
             ...this.bounds
         })
-        this.activeFood.draw(ctx)
-        this.player.draw(ctx)
-        this.marker.draw()
     }
 
     /**
@@ -76,8 +63,13 @@ class Level {
 
         // draw ctx
         this.draw(gui.ctx)
+        this.player.draw(gui.ctx)
+        this.activeFood.draw(gui.ctx)
 
-        // draw mapCtx
+        // draw windowCtx
+        this.marker.draw(gui.windowCtx)
+
+        // draw appCtx
         this.mapViewport.update({ ctx: gui.mapCtx, updateSize: false }, () => this.draw(gui.mapCtx))
     }
 }
