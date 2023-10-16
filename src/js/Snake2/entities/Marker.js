@@ -42,23 +42,26 @@ class Marker {
     updateShape() {
         let dist = this.distance / 100
         dist = (dist < 2 ? dist : 2)
-        const width = this.size / 2 * dist
-        const height = (this.size * 2) * dist
+
+        const { x, y, size } = this
+
+        const width = size / 2 * dist
+        const height = (size * 2) * dist
         const angle = (this.angle - Math.PI/2) % (2 * Math.PI);
 
         const vertex1 = {
-            x: this.x + width * Math.cos(angle),
-            y: this.y + width * Math.sin(angle)
+            x: x + width * Math.cos(angle),
+            y: y + width * Math.sin(angle)
         };
 
         const vertex2 = {
-            x: this.x + width * Math.cos(angle + Math.PI),
-            y: this.y + width * Math.sin(angle + Math.PI)
+            x: x + width * Math.cos(angle + Math.PI),
+            y: y + width * Math.sin(angle + Math.PI)
         };
 
         const vertex3 = {
-            x: this.x + height * Math.cos(angle + Math.PI / 2),
-            y: this.y + height * Math.sin(angle + Math.PI / 2)
+            x: x + height * Math.cos(angle + Math.PI / 2),
+            y: y + height * Math.sin(angle + Math.PI / 2)
         };
 
         this.polygons = [vertex1, vertex2, vertex3];
