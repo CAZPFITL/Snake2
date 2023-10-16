@@ -26,8 +26,11 @@ class Timer {
         minutes = minutes.toString().padStart(2, '0')
         seconds = seconds.toString().padStart(2, '0')
 
-        const output = format.match(/[h|m|s]/g).map((element)=>
-            element === 'h' ? hours : element === 'm' ? minutes : element === 's' ? seconds : 'x')
+        const output = format.match(/[h|m|s]/g)
+            .map((element)=>
+                element === 'h' ? hours : element === 'm'
+                    ? minutes : element === 's'
+                        ? seconds : 'x')
 
         return output.join(':');
     }

@@ -61,16 +61,19 @@ class Level {
         this.player.update()
         this.marker.update()
 
+        const print = (ctx) => {
+            this.draw(ctx)
+            this.player.draw(ctx)
+            this.activeFood.draw(ctx)
+        }
         // draw ctx
-        this.draw(gui.ctx)
-        this.player.draw(gui.ctx)
-        this.activeFood.draw(gui.ctx)
+        print(gui.ctx)
 
         // draw windowCtx
         this.marker.draw(gui.windowCtx)
 
         // draw appCtx
-        this.mapViewport.update({ ctx: gui.mapCtx, updateSize: false }, () => this.draw(gui.mapCtx))
+        this.mapViewport.update({ ctx: gui.mapCtx, updateSize: false }, () => print(gui.mapCtx))
     }
 }
 
