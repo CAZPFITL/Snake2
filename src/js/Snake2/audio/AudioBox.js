@@ -1,28 +1,16 @@
+import { actions, songs } from './../dir/game.js'
+
 class AudioBox {
-    actions = {}
-    songs = {}
+    actions = actions
+    songs = songs
     constructor({ app }) {
         this.app = app
         this.init()
     }
 
     init = () => {
-        this.actions = {
-            back: new Audio('src/js/Snake2/audio/back.wav'),
-            left: new Audio('src/js/Snake2/audio/left.wav'),
-            right: new Audio('src/js/Snake2/audio/right.wav'),
-            forward: new Audio('src/js/Snake2/audio/forward.wav'),
-            eat: new Audio('src/js/Snake2/audio/eat.wav'),
-            die: new Audio('src/js/Snake2/audio/die.wav'),
-            special: new Audio('src/js/Snake2/audio/special.wav')
-        }
-        this.songs = {
-            main: new Audio('src/js/Snake2/audio/main.wav')
-        }
-
         this.playing = this.songs.main
         this.setVolume(false, false, '0.1')
-
         this.playing.addEventListener('ended', () => {
             this.playing.currentTime = 0
             this.playing.play()
