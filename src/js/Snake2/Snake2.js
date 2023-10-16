@@ -1,4 +1,4 @@
-import { Screen, Level } from './dir/core.js'
+import { Screen, Level, AudioBox } from './dir/core.js'
 
 
 /**
@@ -12,6 +12,7 @@ export default class Snake2 {
         this.app = app
         app.game = this
         this.screen = new Screen(app)
+        this.audio = new AudioBox(app)
     }
 
     /**
@@ -28,6 +29,9 @@ export default class Snake2 {
     setPlayState() {
         this.app.setState('PLAY')
         this.app.level = new Level({ app: this.app })
+
+        console.log(this.audio)
+        this.audio.play()
         this.app.listeners.init()
     }
 
