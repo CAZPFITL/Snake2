@@ -80,13 +80,14 @@ class Snake extends Collisions {
      * Update the snake by executing speed, position, angle, body length, bound collision, and self-collision checks.
      */
     update = () => {
+        const { gui, level } = this.app
         if (this.alive) {
             this.move()
             this.eat()
             this.checkBoundCollision()
             this.checkSelfCollision()
-            this.app.gui.viewport.follow(this.app.level.player)
-            this.app.level.map.follow(this.app.level.player)
+            gui.viewport.follow(level.player)
+            level.mapViewport.follow(level.player)
             this.updateData()
         }
     }

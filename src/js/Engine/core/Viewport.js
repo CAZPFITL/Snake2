@@ -118,6 +118,12 @@ class Viewport {
             target.y
         ])
     }
+
+    update = (props, handler) => {
+        this.begin(props)
+        handler()
+        this.end(props.ctx)
+    }
 }
 
 export default Viewport

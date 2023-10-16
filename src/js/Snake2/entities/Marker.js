@@ -68,10 +68,11 @@ class Marker {
      * Draw the marker on the canvas context if it should be displayed and the snake is alive.
      */
     draw() {
-        if (!this.display || !this.app.level.player.alive) {
+        const { level } = this.app
+        if (!this.display || !level.player.alive) {
             return;
         }
-        const fill = `${this.app.level.activeFood.color}${this.distance/1000})`
+        const fill = `${level.activeFood.color}${this.distance/1000})`
         this.app.gui.get.polygon(this.app.gui.windowCtx, this.polygons, fill)
     }
 

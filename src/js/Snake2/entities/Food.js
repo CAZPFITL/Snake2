@@ -10,13 +10,7 @@ class Food {
     isSpecial = Tools.random(0, 1000, true) < 50
     color = this.isSpecial ? 'rgba(0,255,217,' : 'rgba(0,0,0,'
     value = this.isSpecial ? 10 : 1
-    /**
-     * Create a new `Food` instance within the specified game level.
-     *
-     * @param {Object} options - An object containing game-related options.
-     * @param {App} options.app - The application instance.
-     * @param {Object} options.level - The game level properties, including bounds and border.
-     */
+
     constructor({ app, level }) {
         const { bounds: { width, height }, border } = level
         this.app = app
@@ -35,13 +29,6 @@ class Food {
             fill: this.color + '1)',
             ...this
         })
-    }
-
-    /**
-     * Update the food item by redrawing it.
-     */
-    update = () => {
-        // TODO add eat logic here
     }
 }
 

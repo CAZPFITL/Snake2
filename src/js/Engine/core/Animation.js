@@ -5,11 +5,6 @@ class Animation {
     app; // Reference to the game application.
     request; // A reference to the animation frame request.
 
-    /**
-     * Initializes the Animation class.
-     *
-     * @param {Object} app - The game application.
-     */
     constructor(app) {
         this.app = app;
         return this;
@@ -19,20 +14,15 @@ class Animation {
      * The main animation loop function.
      */
     mainLoop = () => {
-        this.app.gui.viewport.begin({ ctx: this.app.gui.ctx })
-        this.app.gui.viewport.begin({
-            ctx: this.app.gui.windowCtx,
-            viewport: false
-        })
-
-        // Loop through components in the game looper and call their update functions.
-        this.app.looper.forEach(({ update }) => update?.(this.request));
-
-        // Request the next animation frame and continue the loop.
-        this.request = requestAnimationFrame(this.mainLoop);
-
-        this.app.gui.viewport.end(this.app.gui.ctx)
-        this.app.gui.viewport.end(this.app.gui.windowCtx)
+        const { gui, looper } = this.app
+        gui.viewport.update({ ctx: gui.windowCtx, viewport: false }, () =>
+            gui.viewport.update({ ctx: gui.ctx }, () => {
+                // Loop through components in the game looper and call their update functions.
+                looper.forEach(({ update }) => update?.(this.request));
+                // Request the next animation frame and continue the loop.
+                this.request = requestAnimationFrame(this.mainLoop);
+            })
+        )
     }
 }
 

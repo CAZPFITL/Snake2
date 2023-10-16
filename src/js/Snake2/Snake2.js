@@ -41,7 +41,6 @@ export default class Snake2 {
      */
     update = () => {
         if (this.app.state === 'LOAD_GAME') this.setMenuState()
-        this.app?.level?.draw?.(this.app.gui.ctx)
         this.app?.level?.update()
         this.screen.update()
     }
