@@ -32,7 +32,7 @@ export default class Snake2 {
         this.app.setState('PLAY')
         this.app.gui.mapCtx.canvas.style.display = 'block'
         this.app.level = new Level({ app: this.app })
-        // this.audio.play()
+        this.app.audio.play()
     }
 
     /**
@@ -41,6 +41,9 @@ export default class Snake2 {
     update = () => {
         if (this.app.state === 'LOAD_GAME') this.setMenuState()
         this.app?.level?.update()
+        if (!this.app?.level?.player?.alive) {
+            this.app.audio.stop()
+        }
         this.app.screen.update()
     }
 }
