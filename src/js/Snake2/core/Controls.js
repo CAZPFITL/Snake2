@@ -25,7 +25,6 @@ class Controls {
      */
     keyup = (event) => {
         event.stopPropagation()
-        const { level, game, state } = this.app
         // event.preventDefault()
         // const isGameOver = level?.timer.value > 0 && !level?.player?.alive
         // if (isGameOver) game.setPlayState()
@@ -56,18 +55,33 @@ class Controls {
     keydown = (event) => {
         event.stopPropagation()
         // event.preventDefault()
+
+        const { audio } = this.app
+
         switch (event.key) {
             case 'ArrowUp':
                 this.input.y = 1
+                if (this.app.state === 'PLAY') {
+                    audio.play('actions', 'forward', 0.05)
+                }
                 break;
             case 'ArrowDown':
                 this.input.y = -1
+                if (this.app.state === 'PLAY') {
+                    audio.play('actions', 'back', 0.05)
+                }
                 break;
             case 'ArrowRight':
                 this.input.x = 1
+                if (this.app.state === 'PLAY') {
+                    audio.play('actions', 'right', 0.05)
+                }
                 break;
             case 'ArrowLeft':
                 this.input.x = -1
+                if (this.app.state === 'PLAY') {
+                    audio.play('actions', 'left', 0.05)
+                }
                 break;
         }
     }
