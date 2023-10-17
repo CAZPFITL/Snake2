@@ -9,7 +9,7 @@ import Tools from './core/Tools.js'
  */
 export default class AppMethods extends StateManager {
     tools = Tools // A reference to the Tools class for utility functions.
-    looper // Stores components for the game loop.
+    looper = []// Stores components for the game loop.
     listeners // Manages event listeners.
     animation // Manages animations and state transitions.
 
@@ -24,10 +24,8 @@ export default class AppMethods extends StateManager {
         this.listeners = new Listeners(this) // Create an instance of the Listeners class.
 
         // Initialize the looper array with Gui and Game components.
-        this.looper = [
-            new Gui(this), // Create an instance of the Gui class.
-            new Game(this) // Create an instance of the Game class.
-        ];
+        this.looper.push(new Gui(this))
+        this.looper.push(new Game(this))
     }
 
     /**

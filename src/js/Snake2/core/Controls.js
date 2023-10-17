@@ -14,7 +14,7 @@ class Controls {
         if (this.isMobile) {
             this.xJoystick = new JoyStick('x-joystick')
             this.yJoystick = new JoyStick('y-joystick')
-            this.app.looper.push(this)
+            app.looper.push(this)
         }
     }
 
