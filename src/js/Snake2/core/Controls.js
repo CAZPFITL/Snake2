@@ -3,7 +3,7 @@ class Controls {
     sensibility = 10
     isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    constructor(app) {
+    constructor({ app }) {
         this.app = app
         const props = Object.getOwnPropertyNames(this);
         const eventTypes = props.filter(prop => typeof this[prop] === 'function');
@@ -25,7 +25,11 @@ class Controls {
      */
     keyup = (event) => {
         event.stopPropagation()
+        const { level, game, state } = this.app
         // event.preventDefault()
+        // const isGameOver = level?.timer.value > 0 && !level?.player?.alive
+        // if (isGameOver) game.setPlayState()
+
         switch (event.key) {
             case 'ArrowUp':
                 this.input.y = 0

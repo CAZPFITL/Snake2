@@ -19,7 +19,7 @@ class EventsMethods {
         {
             event.preventDefault()
             event.stopPropagation()
-            const delta = Math.max(-this.app.gui.viewport.rate, Math.min(this.app.gui.viewport.rate, event.deltaY))
+            const delta = Math.max(-this.app.gui.viewport.rate, Math.min(100, event.deltaY))
 
             if (event.ctrlKey) {
                 let zoomLevel = this.app.gui.viewport.zoom + Math.floor(delta)

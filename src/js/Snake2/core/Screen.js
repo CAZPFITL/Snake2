@@ -5,14 +5,12 @@ import { BUTTONS, EventsMethods } from './../dir/core.js'
  * Represents a screen in the application, handling events and rendering components.
  */
 export default class Screen extends EventsMethods {
-    constructor(app) {
+    constructor({ app }) {
         super(app)
         this.app = app
-        app.gui.viewport
-            .setProp('maxZoom', 1000)
-            .setProp('minZoom', 500)
-            .setProp('zoom', 500)
-            .setProp('lookAt', [0, 0])
+
+        app.gui.mapViewport.maxZoom = 9999
+        app.gui.mapViewport.minZoom = 0
     }
 
     /**
@@ -38,18 +36,20 @@ export default class Screen extends EventsMethods {
      * Update the screen components, including buttons, text, and other decorations.
      */
     update(){
+        app.gui.mapViewport.zoom = this?.app?.level?.size * 2
         const { gui, game, level } = this.app
+        const isGameOver = level?.timer.value > 0 && !level?.player?.alive
 
         gui.decorations = {
             LOAD_ENGINE: {
                 stateBg: '#000000'
             },
-            MENU_MAIN: {
+            MAIN_MENU: {
                 stateBg: '#ffb3fc',
                 startButton: {
                     type: 'button',
                     props: {
-                        ctx: gui.windowCtx,
+                        ctx: gui.controlsCtx,
                         font: '30px Mouse',
                         text: 'START',
                         x: window.innerWidth / 2 - 100,
@@ -57,9 +57,8 @@ export default class Screen extends EventsMethods {
                         width: 200,
                         height: 50,
                         ...this.getButtonStates('startButton', BUTTONS.normal),
-                        center: true,
                         widthStroke: 1,
-                        textPosition: { x: 5, y: 5 },
+                        textPosition: { x: 2, y: 10 },
                         callbacks: {
                             mouseup: () => {
                                 game.setPlayState()
@@ -73,7 +72,7 @@ export default class Screen extends EventsMethods {
                 score: {
                     type: 'text',
                     props: {
-                        ctx: gui.windowCtx,
+                        ctx: gui.controlsCtx,
                         font: '30px Mouse',
                         text: `score: ${level?.player?.length}`,
                         x: window.innerWidth / 2 + 15,
@@ -84,7 +83,7 @@ export default class Screen extends EventsMethods {
                 speedBar: {
                     type: 'bar',
                     props: {
-                        ctx: gui.windowCtx,
+                        ctx: gui.controlsCtx,
                         x: window.innerWidth / 2 - 175,
                         y: window.innerHeight - 20,
                         textProps: {
@@ -103,25 +102,48 @@ export default class Screen extends EventsMethods {
                 timer: {
                     type: 'text',
                     props: {
-                        ctx: gui.windowCtx,
+                        ctx: gui.controlsCtx,
                         font: '40px Mouse',
-                        text: level?.timer?.print('h:m:s'),
-                        x: window.innerWidth / 2,
-                        y: window.innerHeight - 900,
+                        text: level?.timer?.getTime('h:m:s:x'),
+                        x: window.innerWidth / 2 - gui.controlsCtx.measureText(level?.timer?.getTime('h:m:s')).width / 1.2,
+                        y: 50,
                         color: '#ffffff'
                     }
                 },
-                die: {
-                    type: 'text',
-                    props: {
-                        ctx: gui.windowCtx,
-                        font: '70px Mouse',
-                        text: level?.timer.value > 0 && !level?.player?.alive ? 'GAME OVER' : '',
-                        x: window.innerWidth / 2 - (String(level?.player?.length).length * 10),
-                        y: window.innerHeight - 450,
-                        color: '#ffffff'
+                // GAME OVER STUFF, not having two states to keep all in PLAY
+                ...isGameOver ? {
+                    gameOver: {
+                        type: 'text',
+                        props: {
+                            ctx: gui.controlsCtx,
+                            font: '70px Mouse',
+                            text: 'GAME OVER',
+                            x: window.innerWidth / 2 - gui.controlsCtx.measureText('GAME OVER').width - 10,
+                            y: window.innerHeight / 2 - 35,
+                            color: '#ffffff'
+                        }
+                    },
+                    restartButton: {
+                        type: 'button',
+                        props: {
+                            ctx: gui.controlsCtx,
+                            font: '30px Mouse',
+                            text: 'RESTART',
+                            x: window.innerWidth / 2 - 100,
+                            y: window.innerHeight / 2,
+                            width: 200,
+                            height: 50,
+                            ...this.getButtonStates('restartButton', BUTTONS.normal),
+                            widthStroke: 1,
+                            textPosition: { x: 4, y: 10 },
+                            callbacks: {
+                                mouseup: () => {
+                                    game.setPlayState()
+                                }
+                            }
+                        }
                     }
-                }
+                } : {}
             }
         }
     }

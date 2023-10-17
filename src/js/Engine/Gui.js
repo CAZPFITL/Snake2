@@ -5,16 +5,16 @@ import Viewport from './core/Viewport.js'
  * The Gui class handles the graphical user interface for the game.
  */
 export default class Gui extends ScreenObjects {
-    app;
-    ctx;
-    windowCtx;
-    viewport;
-    get = Gui;
-    decorations = {};
-    buttonsCollection = {};
-    hoverCollection = {};
-    buttonsStates = {};
-    elementHovered = null;
+    app
+    ctx
+    controlsCtx
+    viewport
+    get = Gui
+    decorations = {}
+    buttonsCollection = {}
+    hoverCollection = {}
+    buttonsStates = {}
+    elementHovered = null
 
     /**
      * Create a new Gui instance.
@@ -23,30 +23,18 @@ export default class Gui extends ScreenObjects {
      */
     constructor(app) {
         super();
-        this.app = app;
-        this.ctx = Gui.createCanvas('gameCanvas');
-        this.windowCtx = Gui.createCanvas('windowCanvas');
-        this.mapCtx = Gui.createCanvas('mapCanvas');
-        this.viewport = new Viewport({ app });
-        app.gui = this;
-    }
+        this.app = app
 
-    /**
-     * Handle hover events for GUI elements.
-     *
-     * @param {function} isHover - The callback function when an element is hovered.
-     * @param {function} isOut - The callback function when an element is no longer hovered.
-     * @param {Event} event - The hover event.
-     */
-    hover(isHover, isOut, event){
-        app.gui.get.checkHoverCollection({
-            collection: this.hoverCollection,
-            event,
-            viewport: this.viewport,
-            isHover,
-            isOut,
-            caller: this.elementHovered,
-        });
+        // context collection, individual declarations for easy access from outside
+        this.ctx = Gui.createCanvas('gameCanvas')
+        this.controlsCtx = Gui.createCanvas('windowCanvas')
+        this.mapCtx = Gui.createCanvas('mapCanvas')
+
+        // viewport collection, individual declarations for easy access from outside
+        this.viewport = new Viewport({ app })
+        this.mapViewport = new Viewport({ app, forceSize: { width: 100, height: 100 } })
+
+        app.gui = this
     }
 
     /**

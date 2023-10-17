@@ -77,16 +77,24 @@ class ScreenObjects extends ScreenMethods {
         height,
         text,
         bg = '#ffffff',
+        textAlign = 'center',
         color = '#000',
         stroke = '#000',
         center = true,
         widthStroke = 1,
         textPosition = { x: 0, y: 0 }
     }) {
-    ctx.save()
-    this.square({ctx, x, y, width, height, color: bg, stroke, widthStroke})
-    this.text({ctx, font, color, text, x: x + textPosition.x, y: y + textPosition.y, width, height, center})
-    ctx.restore()
+        ctx.font = font // ensures correct measurment
+        ctx.textAlign = textAlign // ensures correct measurment
+        this.square({ctx, x, y, width, height, color: bg, stroke, widthStroke})
+        this.text({
+            ctx,
+            font,
+            color,
+            text,
+            x: x + textPosition.x + width / 2,
+            y: y + textPosition.y + height / 2
+        })
     }
 
     /**
@@ -133,15 +141,10 @@ class ScreenObjects extends ScreenMethods {
      * @param {number} options.height - The height of the text area.
      * @param {boolean} [options.center=false] - Whether to center the text in the area.
      */
-    static text({ctx, font, color, text, x, y, width, height, center = false}) {
-        ctx.save()
+    static text({ctx, font, color, text, x, y}) {
         ctx.font = font
         ctx.fillStyle = color
-        const xText = x + width / 2 - ctx.measureText(text).width / 2
-        const yText = y + height / 2 + 5
-        ctx.fillText(text, center ? xText : x, center ? yText : y)
-        return ctx.measureText(text).width
-        ctx.restore()
+        ctx.fillText(text, x, y)
     }
 
     /**
@@ -176,7 +179,6 @@ class ScreenObjects extends ScreenMethods {
         text: ''
        }
    }, negative = false) {
-        ctx.save()
         const normalizedProgress = fill / (cap / 255)
         const progress = negative ? cap - fill : fill
 
@@ -197,7 +199,6 @@ class ScreenObjects extends ScreenMethods {
         ctx.fillRect(x, y, progress, height)
 
         this.text({ctx, font: '12px Mouse', ...textProps, x, y: y - height})
-        ctx.restore()
     }
 
     /**

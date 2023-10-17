@@ -2,6 +2,28 @@
  * A utility class containing static methods for common screen-related operations.
  */
 class ScreenMethods {
+    hoverCollection
+    viewport
+    elementHovered
+
+    /**
+     * Handle hover events for GUI elements.
+     *
+     * @param {function} isHover - The callback function when an element is hovered.
+     * @param {function} isOut - The callback function when an element is no longer hovered.
+     * @param {Event} event - The hover event.
+     */
+    hover(isHover, isOut, event){
+        app.gui.get.checkHoverCollection({
+            collection: this.hoverCollection,
+            event,
+            viewport: this.viewport,
+            isHover,
+            isOut,
+            caller: this.elementHovered,
+        });
+    }
+
     /**
      * Create and return a canvas context for the specified HTML canvas element.
      *

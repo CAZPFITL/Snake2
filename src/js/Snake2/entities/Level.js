@@ -1,4 +1,4 @@
-import {Food, Snake, Timer, Marker, Viewport} from './../dir/core.js'
+import {Food, Snake, Timer, Marker, Viewport, Controls} from './../dir/core.js'
 
 /**
  * Represents a game level containing food, a snake, and a marker.
@@ -6,11 +6,12 @@ import {Food, Snake, Timer, Marker, Viewport} from './../dir/core.js'
 class Level {
     app
     activeFood
+    size = 60
     bounds = {
-        x: -500,
-        y: -500,
-        width: 1000,
-        height: 1000
+        x: -this.size,
+        y: -this.size,
+        width: this.size * 2,
+        height: this.size * 2
     }
     border = 20
 
@@ -24,7 +25,6 @@ class Level {
      */
     init = () => {
         const { app } = this
-        this.mapViewport = new Viewport({ app })
         this.activeFood = new Food({ app, level: this })
         this.player = new Snake({ app })
         this.marker = new Marker({ app })
@@ -66,14 +66,18 @@ class Level {
             this.player.draw(ctx)
             this.activeFood.draw(ctx)
         }
+
         // draw ctx
         print(gui.ctx)
+        print(gui.mapCtx)
+        this.marker.draw(gui.controlsCtx)
 
-        // draw windowCtx
-        this.marker.draw(gui.windowCtx)
-
-        // draw appCtx
-        this.mapViewport.update({ ctx: gui.mapCtx, updateSize: false }, () => print(gui.mapCtx))
+        this.bounds = {
+            x: -this.size,
+            y: -this.size,
+            width: this.size * 2,
+            height: this.size * 2
+        }
     }
 }
 

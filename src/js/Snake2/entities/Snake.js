@@ -12,7 +12,7 @@ class Snake extends Collisions {
     body = [{x: 0, y: 0}]
     headSize = 5
     radius = 4
-    length = 100
+    length = 10
     alive = true
 
     constructor({ app, id = 0 }) {
@@ -32,6 +32,7 @@ class Snake extends Collisions {
         if (distanceToFood < minimumDistanceToEat) {
             this.length += level.activeFood.value
             level.setFood()
+            level.size++
         }
     }
 
@@ -78,8 +79,8 @@ class Snake extends Collisions {
             this.checkSelfCollision()
             this.updateData()
 
-            gui.viewport.follow(level.player)
-            level.mapViewport.follow(level.player)
+            gui.viewport.followTo(level.player)
+            gui.mapViewport.followTo(level.player)
 
         }
     }

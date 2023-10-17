@@ -14,14 +14,18 @@ class Animation {
      */
     mainLoop = () => {
         const { gui, looper } = this.app
-        gui.viewport.update({ ctx: gui.windowCtx, viewport: false }, () =>
-            gui.viewport.update({ ctx: gui.ctx }, () => {
+
+        // viewport and map viewport run the same handler to make only one calculation
+        gui.viewport.update(gui.ctx, () => {
+            gui.mapViewport.update(gui.mapCtx, () => {
+                // updates the controls/stats ctx, as handler from main viewport this only requires a simple update
+                gui.viewport.updateCtx( gui.controlsCtx )
                 // Loop through components in the game looper and call their update functions.
                 looper.forEach(({ update }) => update?.(this.request));
                 // Request the next animation frame and continue the loop.
                 this.request = requestAnimationFrame(this.mainLoop);
             })
-        )
+        })
     }
 }
 

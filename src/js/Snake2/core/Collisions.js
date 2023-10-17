@@ -1,5 +1,3 @@
-import { Controls } from './../dir/core.js'
-
 class Collisions {
     x
     y
@@ -15,7 +13,6 @@ class Collisions {
     }
     speed = 1
     angle = 0
-    controls = new Controls(app)
 
     /**
      * Check if the snake collides with the game level's boundaries and set its alive state accordingly.
@@ -67,13 +64,13 @@ class Collisions {
         this.angle += this.turnSpeed
         this.angle %= 2 * Math.PI // Keep angle within a readable range
         this.speed += this.acceleration
-        this.turnSpeed = this.controls.input.x / this.controls.sensibility
-        this.acceleration = this.controls.input.y / this.controls.sensibility
+        this.turnSpeed = this.app.controls.input.x / this.app.controls.sensibility
+        this.acceleration = this.app.controls.input.y / this.app.controls.sensibility
 
-        if (this.controls.input.y === 0) {
+        if (this.app.controls.input.y === 0) {
             this.speed = 1;
         } else {
-            this.acceleration = this.controls.input.y / this.controls.sensibility;
+            this.acceleration = this.app.controls.input.y / this.app.controls.sensibility;
         }
 
         if (this.speed > this.speedParameters.max) {

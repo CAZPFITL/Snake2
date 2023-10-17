@@ -5,6 +5,7 @@ import ScreenObjects from './../../Engine/core/ScreenObjects.js'
 import StateManager from './../../Engine/core/StateManager.js'
 import Tools from './../../Engine/core/Tools.js'
 import Viewport from './../../Engine/core/Viewport.js'
+import Gui from './../../Engine/Gui.js'
 
 export {
     Animation,
@@ -13,5 +14,6 @@ export {
     ScreenObjects,
     StateManager,
     Tools,
+    Gui,
     Viewport
 }

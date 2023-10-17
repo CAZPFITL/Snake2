@@ -1,4 +1,4 @@
-import { Screen, Level, AudioBox } from './dir/core.js'
+import {Screen, Level, AudioBox, Controls} from './dir/core.js'
 
 
 /**
@@ -11,16 +11,18 @@ export default class Snake2 {
     constructor(app) {
         this.app = app
         app.game = this
-        this.screen = new Screen(app)
-        this.audio = new AudioBox(app)
+        app.screen = new Screen({ app })
+        app.audio = new AudioBox({ app })
+        app.controls = new Controls({ app })
+        app.listeners.init()
     }
 
     /**
      * Set the game state to the main menu state and initialize the event listeners.
      */
     setMenuState() {
-        this.app.setState('MENU_MAIN')
-        this.app.listeners.init()
+        this.app.setState('MAIN_MENU')
+        this.app.gui.mapCtx.canvas.style.display = 'none'
     }
 
     /**
@@ -28,11 +30,9 @@ export default class Snake2 {
      */
     setPlayState() {
         this.app.setState('PLAY')
+        this.app.gui.mapCtx.canvas.style.display = 'block'
         this.app.level = new Level({ app: this.app })
-
-        console.log(this.audio)
-        this.audio.play()
-        this.app.listeners.init()
+        // this.audio.play()
     }
 
     /**
@@ -41,6 +41,6 @@ export default class Snake2 {
     update = () => {
         if (this.app.state === 'LOAD_GAME') this.setMenuState()
         this.app?.level?.update()
-        this.screen.update()
+        this.app.screen.update()
     }
 }
