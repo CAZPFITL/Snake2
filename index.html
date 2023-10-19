@@ -10,7 +10,14 @@
     <link href="src/css/normalize.css" rel="stylesheet">
 </head>
 <body>
-<canvas id="gameCanvas"></canvas>
-<script src="src/js/main.js" type="module"></script>
+    <div id="y-joystick" class="joystick"></div>
+    <div id="x-joystick" class="joystick"></div>
+    <canvas id="gameCanvas"></canvas>
+    <canvas id="windowCanvas"></canvas>
+    <canvas id="mapCanvas"></canvas>
 </body>
+<footer>
+    <script src="src/js/Dependencies/Joy.js"></script>
+    <script src="src/js/main.js" type="module"></script>
+</footer>
 </html>

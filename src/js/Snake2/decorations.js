@@ -107,3 +107,23 @@ export const COLORS = {
         '#E34234', // RASPBERRY
     ]
 }
+
+export const BUTTONS = {
+    normal: {
+        normal: {
+            bg: COLORS.WHITE[0],
+            color: COLORS.BLACK[0],
+            stroke: COLORS.BLACK[0]
+        },
+        hover: {
+            bg: COLORS.WHITE[9],
+            color: COLORS.BLACK[0],
+            stroke: COLORS.BLACK[0]
+        },
+        click: {
+            bg: COLORS.BLACK[0],
+            color: COLORS.WHITE[0],
+            stroke: COLORS.WHITE[0]
+        }
+    }
+}
